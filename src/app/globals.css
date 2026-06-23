@@ -1,26 +1,187 @@
 @import "tailwindcss";
 
+/* ========================================
+   MCQZone Theme Variables
+======================================== */
+
 :root {
+  /* Brand Colors */
+  --primary: #4a7dd3;
+  --primary-dark: #1f3a5f;
+  --accent: #d4a017;
+
+  /* Backgrounds */
   --background: #ffffff;
-  --foreground: #171717;
+  --background-secondary: #f8fafc;
+  --card: #ffffff;
+
+  /* Text */
+  --foreground: #0f172a;
+  --muted-foreground: #64748b;
+
+  /* Borders */
+  --border: #e2e8f0;
+
+  /* Status Colors */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-card:
+    0 2px 10px rgba(0, 0, 0, 0.05);
 }
+
+/* ========================================
+   Tailwind Theme Mapping
+======================================== */
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+
   --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-accent: var(--accent);
+
+  --color-border: var(--border);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+/* ========================================
+   Dark Mode
+======================================== */
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --background-secondary: #1e293b;
+    --card: #1e293b;
+
+    --foreground: #f8fafc;
+    --muted-foreground: #cbd5e1;
+
+    --border: #334155;
   }
+}
+
+/* ========================================
+   Global Styles
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans);
+}
+
+/* ========================================
+   Selection
+======================================== */
+
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+/* ========================================
+   Scrollbar
+======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* ========================================
+   Reusable Utility Classes
+======================================== */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.section-padding {
+  padding: 4rem 1rem;
+}
+
+.page-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: 1rem;
+}
+
+/* ========================================
+   Dashboard Gradient
+======================================== */
+
+.dashboard-bg {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(74, 125, 211, 0.08),
+      rgba(212, 160, 23, 0.05)
+    );
+}
+
+/* ========================================
+   Quiz Option Hover
+======================================== */
+
+.quiz-option {
+  transition: all 0.2s ease;
+}
+
+.quiz-option:hover {
+  border-color: var(--primary);
+  background: rgba(74, 125, 211, 0.05);
+}
+
+/* ========================================
+   Focus Styles
+======================================== */
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
