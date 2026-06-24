@@ -192,7 +192,8 @@ html {
 }
 
 body {
-  @apply bg-background text-foreground;
+ 
+  background: #f6f8fc;
   font-family:
     Inter,
     Geist,
@@ -247,15 +248,6 @@ body {
     );
 }
 
-.page-header-gradient {
-  background:
-    linear-gradient(
-      135deg,
-      #f7faff 0%,
-      #eaf1ff 100%
-    );
-}
-
 .footer-gradient {
   background:
     linear-gradient(
@@ -277,17 +269,18 @@ body {
 
 .exam-card {
   background: white;
-  border: 1px solid #e4e7ec;
+  border: 1px solid #e5e7eb;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.04);
   border-radius: 12px;
   transition: all 0.3s ease;
-  box-shadow:
-    0 1px 2px rgba(16, 24, 40, 0.05);
 }
 
 .exam-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
+
   box-shadow:
-    0 12px 30px rgba(74, 125, 211, 0.15);
+    0 10px 24px rgba(74,125,211,.12);
 }
 
 .glass-card {
@@ -296,10 +289,23 @@ body {
   border: 1px solid rgba(255,255,255,0.5);
 }
 
+/* Add to the bottom of globals.css */
+.bg-hero-gradient {
+  background: linear-gradient(90deg, #e4edfa 0%, #f4f7fc 40%, #ffffff 100%);
+}
+
+.bg-ai-gradient {
+  background: linear-gradient(90deg, #ffffff 0%, #f2f5fc 100%);
+}
+
+.bg-user-gradient {
+  background: linear-gradient(135deg, #4b7add 0%, #355ebd 100%);
+}
+
 .section-spacing {
   @apply py-20 md:py-24;
 }
 
 .container-custom {
-  @apply mx-auto max-w-7xl px-4 md:px-6 lg:px-8;
+  @apply mx-auto max-w-[1600px] px-8;
 }
