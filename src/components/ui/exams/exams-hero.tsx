@@ -15,9 +15,9 @@ export function ExamsHero() {
 
       <div className="relative z-10 hidden md:block">
         <Image
-          src="/images/hero-exam.jpeg"
+          src="/images/visily-image.jpg"
           width={280}
-          height={180}
+          height={100}
           alt="Student studying"
           className="rounded-xl shadow-sm object-cover"
         />

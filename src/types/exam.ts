@@ -1,6 +1,7 @@
 export interface Exam {
   id: string;
   title: string;
+  description?: string;
   category: string;
   questions: number;
   duration: number;

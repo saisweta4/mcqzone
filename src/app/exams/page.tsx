@@ -59,8 +59,8 @@ export default function ExamsPage() {
           {/* Simple Footer */}
           <footer className="pt-8 mt-8 border-t flex justify-between items-center text-xs text-gray-400">
             <div className="flex items-center gap-2">
-               <span className="font-bold text-gray-900">ExamSarthi</span>
-               <span>© 2024 ExamSarthi Inc. All rights reserved.</span>
+               <span className="font-bold text-gray-900">MCQZone</span>
+               <span>© 2026 MCQZone Inc. All rights reserved.</span>
             </div>
             <div className="flex gap-6">
               <a href="#" className="hover:text-gray-600">Privacy Policy</a>

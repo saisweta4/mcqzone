@@ -291,11 +291,11 @@ body {
 
 /* Add to the bottom of globals.css */
 .bg-hero-gradient {
-  background: linear-gradient(90deg, #e4edfa 0%, #f4f7fc 40%, #ffffff 100%);
+  background: linear-gradient(90deg, #e4edfa 10%, #f4f7fc 40%, #ffffff 100%);
 }
 
 .bg-ai-gradient {
-  background: linear-gradient(90deg, #ffffff 0%, #f2f5fc 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f2f5fc 100%);
 }
 
 .bg-user-gradient {
