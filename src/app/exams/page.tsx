@@ -1,8 +1,8 @@
-import { Sidebar } from "@/components/ui/exams/sidebar";
-import { ExamsGrid } from "@/components/ui/exams/exams-grid";
-import { ExamsHero } from "@/components/ui/exams/exams-hero";
-import { TrendingNow } from "@/components/ui/exams/trending-now";
-import { AIExplanation } from "@/components/ui/exams/ai-explanation";
+import { Sidebar } from "@/components/exams/sidebar";
+import { ExamsGrid } from "@/components/exams/exams-grid";
+import { ExamsHero } from "@/components/exams/exams-hero";
+import { TrendingNow } from "@/components/exams/trending-now";
+import { AIExplanation } from "@/components/exams/ai-explanation";
 import { Search, Filter, MapPin } from "lucide-react";
 
 export default function ExamsPage() {

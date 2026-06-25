@@ -1,6 +1,8 @@
 import { exams } from "@/lib/mock-exams";
 import { ExamCard } from "./exam-card";
-import { Button } from "../button"; // Adjust import path if needed
+
+import { Button } from "../ui/button";
+
 
 export function ExamsGrid() {
   return (
