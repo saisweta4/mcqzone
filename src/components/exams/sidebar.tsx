@@ -1,63 +1,144 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { LayoutDashboard, FileText, Trophy, Users, Bell, ChevronUp } from "lucide-react";
+import { 
+  LayoutGrid, 
+  GraduationCap, 
+  History, 
+  Bell, 
+  Compass, 
+  ChevronDown, 
+  ChevronUp
+} from "lucide-react";
 
-const navItems = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, active: false },
-  { name: "Explore Exams", href: "/exams", icon: FileText, active: true },
-  { name: "My Performance", href: "/performance", icon: Trophy, active: false },
-  { name: "Mock Interviews", href: "/interviews", icon: Users, active: false },
-  { name: "Exam Alerts", href: "/alerts", icon: Bell, active: false },
-];
+import { type ExamCategory } from "@/types/exam";
 
-export function Sidebar() {
+interface SidebarProps {
+  examCategories: ExamCategory[];
+}
+
+export function Sidebar({ examCategories = [] }: SidebarProps) {
+  const [isExamsOpen, setIsExamsOpen] = useState(true);
+  const [openSubexamId, setOpenSubexamId] = useState<string | null>(null);
+
+  const toggleSubexam = (examId: string) => {
+    setOpenSubexamId((prev) => (prev === examId ? null : examId));
+  };
+
   return (
-    <aside className="w-[260px] bg-white border-r flex flex-col h-screen sticky top-0">
-      <div className="h-[72px] px-6 flex items-center">
-        <h1 className="text-xl font-bold text-blue-600 flex items-center gap-2">
-          <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-white text-xs">M</div>
-          MCQZone
-        </h1>
-      </div>
-
-      <div className="px-4 py-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-        Main Menu
-      </div>
-
-      <nav className="flex-1 px-3 space-y-1">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                item.active
-                  ? "bg-gray-100 text-gray-900"
-                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-              }`}
-            >
-              <Icon className="h-5 w-5" />
-              {item.name}
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* User Profile Card */}
-      <div className="p-4 mt-auto border-t">
-        <div className="bg-user-gradient text-white rounded-xl p-3 flex items-center gap-3 shadow-md">
-          <div className="h-9 w-9 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
-            <img src="/user-avatar.png" alt="User" className="h-full w-full object-cover" />
+    // UPDATED: Removed h-screen, sticky, and top-0 so it fits seamlessly into both desktop and mobile wrappers
+    <aside className="w-[280px] bg-white flex flex-col h-full border-r">
+      
+      {/* Header / Logo Section */}
+      <div className="pt-8 pb-6 px-6 shrink-0">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-sm">
+            <GraduationCap className="h-6 w-6" />
           </div>
-          <div className="flex-1">
-            <div className="text-sm font-semibold">Niharika Kalia</div>
-            <div className="text-xs text-white/80">OPSC Aspirant</div>
+          <div>
+            <h1 className="text-xl font-bold text-gray-900 leading-tight">MCQZone</h1>
+            <p className="text-[10px] font-bold text-gray-400 tracking-wider">MAIN MENU</p>
           </div>
-          <ChevronUp className="h-4 w-4 text-white/80" />
         </div>
       </div>
+
+      {/* Navigation Links - Scrollable Area */}
+      <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto pb-4">
+        
+        <Link href="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+          <LayoutGrid className="h-5 w-5" />
+          Dashboard
+        </Link>
+        <Link href="/performance" className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+          <GraduationCap className="h-5 w-5" />
+          My Performance
+        </Link>
+        <Link href="/archives" className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+          <History className="h-5 w-5" />
+          PYQ Archives
+        </Link>
+        <Link href="/alerts" className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+          <Bell className="h-5 w-5" />
+          Exam Alerts
+        </Link>
+
+        {/* Interactive Dropdown: Explore Exams */}
+        <div className="pt-2">
+          <button 
+            onClick={() => setIsExamsOpen(!isExamsOpen)}
+            className="w-full flex items-center justify-between px-4 py-3 bg-[#f5f5ff] text-indigo-600 rounded-xl text-sm font-semibold transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <Compass className="h-5 w-5" />
+              Explore Exams
+            </div>
+            {isExamsOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </button>
+
+          {/* Dynamic Subexams Section */}
+          {isExamsOpen && (
+            <div className="ml-6 mt-3 border-l-[1.5px] border-gray-100 pl-4 space-y-4 pb-2">
+              <p className="text-[10px] font-bold text-gray-500 tracking-wider">SUBEXAMS</p>
+              
+              {examCategories.map((exam) => {
+                const isOpen = openSubexamId === exam.id;
+                
+                return (
+                  <div key={exam.id}>
+                    <button 
+                      onClick={() => toggleSubexam(exam.id)}
+                      className={`w-full flex items-center justify-between text-sm transition-colors ${
+                        isOpen ? "font-semibold text-indigo-600" : "font-medium text-gray-600 hover:text-gray-900"
+                      }`}
+                    >
+                      {exam.name}
+                      {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    </button>
+                    
+                    {isOpen && (
+                      <div className="mt-4 space-y-3 pl-2">
+                        <p className="text-[10px] font-bold text-gray-400 tracking-wider">SUBJECTS</p>
+                        <ul className="space-y-3">
+                          {exam.subjects.map((subject) => (
+                            <Link 
+                              key={subject.id} 
+                              href={`/exams/${exam.id}/subjects/${subject.id}`}
+                              className="flex items-center gap-3 text-sm text-gray-500 hover:text-indigo-600 transition-colors w-full"
+                            >
+                              <div className="h-1.5 w-1.5 rounded-full border-[1.5px] border-gray-400 shrink-0"></div>
+                              <span className="truncate">{subject.name}</span>
+                            </Link>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              {examCategories.length === 0 && (
+                <p className="text-xs text-gray-400 italic">No exams available.</p>
+              )}
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* User Profile Card - Fixed at bottom */}
+      <div className="p-4 shrink-0 border-t">
+        <div className="bg-indigo-600 text-white rounded-xl p-3 flex items-center gap-3 shadow-sm cursor-pointer hover:bg-indigo-700 transition-colors">
+          <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center overflow-hidden shrink-0 border-2 border-white/20">
+            <img src="/user-avatar.png" alt="User" className="h-full w-full object-cover" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-bold truncate">Sai Sweetu Dsa</div>
+            <div className="text-[10px] text-indigo-100 uppercase tracking-wider truncate">OPSC Aspirant</div>
+          </div>
+          <ChevronUp className="h-4 w-4 text-indigo-100 shrink-0" />
+        </div>
+      </div>
+
     </aside>
   );
 }
