@@ -1,19 +1,35 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
 import { 
   Search, Filter, Download, Plus, Eye, Edit2, MoreVertical, 
-  ChevronRight, ChevronLeft, Info, BookOpen, HelpCircle, Trash2, Calendar
+  ChevronRight, ChevronLeft, Info, BookOpen, HelpCircle, Trash2, Clock, Users
 } from "lucide-react";
 
-const examsData = [
-  { id: "EX-101", name: "Odisha Civil Services (OCS) 2024", subjects: 12, status: "Live", date: "2023-12-15" },
-  { id: "EX-102", name: "OSSC Combined Graduate Level", subjects: 8, status: "Draft", date: "2024-01-10", active: true },
-  { id: "EX-103", name: "OPSC Assistant Section Officer", subjects: 6, status: "Live", date: "2023-11-28" },
-  { id: "EX-104", name: "Odisha Police SI Recruitment", subjects: 5, status: "Completed", date: "2023-09-05" },
-  { id: "EX-105", name: "OTET - Primary Level", subjects: 4, status: "Draft", date: "2024-02-01" },
+// --- Types and Mock Data ---
+export interface Exam {
+  id: string;
+  title: string;
+  description: string;
+  questions: number;
+  duration: number;
+  attempts: number;
+  difficulty: string;
+  category: string;
+}
+
+export const exams: Exam[] = [
+  { id: "opsc-aso", title: "OPSC ASO Prelims 2025", description: "Preliminary examination for OPSC ASO posts", questions: 100, duration: 120, attempts: 1250, difficulty: "Medium", category: "OPSC" },
+  { id: "ossc-cgl", title: "OSSC CGL 2025", description: "Combined Graduate Level examination for OSSC posts", questions: 150, duration: 180, attempts: 2100, difficulty: "Hard", category: "OSSC" },
+  { id: "ri-mock-01", title: "RI Mock Test 01", description: "Mock test for RI posts", questions: 100, duration: 90, attempts: 980, difficulty: "Easy", category: "OPSC" },
+  { id: "gk-mega-test", title: "Odisha GK Mega Test", description: "Comprehensive general knowledge test for Odisha state exams", questions: 120, duration: 120, attempts: 3200, difficulty: "Medium", category: "GK" },
 ];
 
 export default function ExamsManagement() {
+  const [selectedExamId, setSelectedExamId] = useState<string>(exams[0].id);
+  const selectedExam = exams.find((e) => e.id === selectedExamId) || exams[0];
+
   return (
     <div className="max-w-7xl mx-auto flex gap-6">
       
@@ -28,12 +44,10 @@ export default function ExamsManagement() {
           </div>
           <div className="flex gap-3">
             <button className="flex items-center gap-2 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-              <Download className="w-4 h-4" />
-              Export CSV
+              <Download className="w-4 h-4" /> Export CSV
             </button>
             <button className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
-              <Plus className="w-4 h-4" />
-              Create New Exam
+              <Plus className="w-4 h-4" /> Create New Exam
             </button>
           </div>
         </div>
@@ -53,15 +67,8 @@ export default function ExamsManagement() {
                 />
               </div>
               <button className="flex items-center gap-2 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                <Filter className="w-4 h-4" />
-                Filters
+                <Filter className="w-4 h-4" /> Filters
               </button>
-            </div>
-            
-            <div className="flex items-center gap-2 text-sm font-medium bg-gray-50 p-1 rounded-md border">
-              <button className="px-3 py-1 rounded bg-white shadow-sm text-gray-900">All</button>
-              <button className="px-3 py-1 rounded text-gray-500 hover:text-gray-900">Live</button>
-              <button className="px-3 py-1 rounded text-gray-500 hover:text-gray-900">Draft</button>
             </div>
           </div>
 
@@ -72,61 +79,67 @@ export default function ExamsManagement() {
                 <tr>
                   <th className="px-6 py-4 w-12"><input type="checkbox" className="rounded border-gray-300" /></th>
                   <th className="px-6 py-4 font-semibold">Exam Name</th>
-                  <th className="px-6 py-4 font-semibold text-center">Subjects</th>
-                  <th className="px-6 py-4 font-semibold">Status</th>
-                  <th className="px-6 py-4 font-semibold">Created Date</th>
+                  <th className="px-6 py-4 font-semibold">Category</th>
+                  <th className="px-6 py-4 font-semibold text-center">Questions</th>
+                  <th className="px-6 py-4 font-semibold">Difficulty</th>
                   <th className="px-6 py-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y text-gray-700">
-                {examsData.map((exam, i) => (
-                  <tr key={i} className={exam.active ? "bg-blue-50/50 border-l-2 border-l-blue-600" : "hover:bg-gray-50/50"}>
-                    <td className="px-6 py-4"><input type="checkbox" className="rounded border-gray-300" /></td>
-                    <td className="px-6 py-4">
-                      <p className="font-semibold text-gray-900">{exam.name}</p>
-                      <p className="text-xs text-gray-500">{exam.id}</p>
-                    </td>
-                    <td className="px-6 py-4 text-center font-medium">{exam.subjects}</td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
-                        exam.status === 'Live' ? 'bg-green-50 text-green-700 border-green-200' :
-                        exam.status === 'Draft' ? 'bg-gray-100 text-gray-700 border-gray-200' :
-                        'bg-slate-100 text-slate-700 border-slate-200'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${
-                          exam.status === 'Live' ? 'bg-green-600' : exam.status === 'Draft' ? 'bg-gray-500' : 'bg-slate-500'
-                        }`}></span>
-                        {exam.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2 text-gray-500 text-xs">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {exam.date}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-right text-gray-400">
-                      <div className="flex items-center justify-end gap-3">
-                        <button className="hover:text-blue-600 transition-colors"><Eye className="w-4 h-4" /></button>
-                        <button className="hover:text-blue-600 transition-colors"><Edit2 className="w-4 h-4" /></button>
-                        <button className="hover:text-gray-600 transition-colors"><MoreVertical className="w-4 h-4" /></button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {exams.map((exam) => {
+                  const isActive = exam.id === selectedExamId;
+                  return (
+                    <tr 
+                      key={exam.id} 
+                      onClick={() => setSelectedExamId(exam.id)}
+                      className={`cursor-pointer ${isActive ? "bg-blue-50/50 border-l-2 border-l-blue-600" : "hover:bg-gray-50/50"}`}
+                    >
+                      <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </td>
+                      <td className="px-6 py-4">
+                        <Link href={`/admin/exams/${exam.id}`} className="hover:text-blue-600 transition-colors">
+                          <p className="font-semibold text-gray-900">{exam.title}</p>
+                          <p className="text-xs text-gray-500">{exam.id}</p>
+                        </Link>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-semibold border">
+                          {exam.category}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-center font-medium">{exam.questions}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
+                          exam.difficulty === 'Easy' ? 'bg-green-50 text-green-700 border-green-200' :
+                          exam.difficulty === 'Medium' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                          'bg-red-50 text-red-700 border-red-200'
+                        }`}>
+                          {exam.difficulty}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right text-gray-400">
+                        <div className="flex items-center justify-end gap-3">
+                          <Link href={`/admin/exams/${exam.id}`} className="hover:text-blue-600 transition-colors">
+                            <Eye className="w-4 h-4" />
+                          </Link>
+                          <button className="hover:text-blue-600 transition-colors"><Edit2 className="w-4 h-4" /></button>
+                          <button className="hover:text-gray-600 transition-colors"><MoreVertical className="w-4 h-4" /></button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
           {/* Pagination */}
           <div className="p-4 border-t flex justify-between items-center text-sm text-gray-500 bg-gray-50/30">
-            <p>Showing <span className="font-medium text-gray-900">1-5</span> of <span className="font-medium text-gray-900">24</span> exams</p>
+            <p>Showing <span className="font-medium text-gray-900">1-{exams.length}</span> of <span className="font-medium text-gray-900">{exams.length}</span> exams</p>
             <div className="flex gap-1">
               <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50"><ChevronLeft className="w-4 h-4" /></button>
               <button className="w-8 h-8 flex items-center justify-center border rounded bg-blue-50 text-blue-600 border-blue-200 font-medium">1</button>
-              <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50 font-medium">2</button>
-              <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50 font-medium">3</button>
-              <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50 font-medium">4</button>
               <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50"><ChevronRight className="w-4 h-4" /></button>
             </div>
           </div>
@@ -142,76 +155,44 @@ export default function ExamsManagement() {
           <div className="p-5 flex-1">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-gray-900">Quick Preview</h3>
-              <button className="text-gray-400 hover:text-gray-600"><ChevronRight className="w-5 h-5" /></button>
+              <Link href={`/admin/exams/${selectedExam.id}`} className="text-gray-400 hover:text-gray-600">
+                <ChevronRight className="w-5 h-5" />
+              </Link>
             </div>
             
             <p className="text-xs text-gray-500 mb-4">Instant overview of selected exam record.</p>
             
             <div className="flex items-center gap-2 mb-2">
-              <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border">Draft</span>
-              <span className="text-xs text-gray-500 font-medium">ID: EX-102</span>
+              <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border">{selectedExam.category}</span>
+              <span className="text-xs text-gray-500 font-medium">ID: {selectedExam.id}</span>
             </div>
             
-            <h2 className="text-lg font-bold text-gray-900 leading-tight mb-1">OSSC Combined Graduate Level</h2>
-            <p className="text-xs text-gray-500 mb-6">Updated 2 days ago by Admin</p>
+            <h2 className="text-lg font-bold text-gray-900 leading-tight mb-1">{selectedExam.title}</h2>
+            <p className="text-xs text-gray-500 mb-6">{selectedExam.description}</p>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="border rounded-md p-3 bg-gray-50/50">
                 <div className="flex items-center gap-2 text-gray-600 mb-1">
-                  <BookOpen className="w-4 h-4" />
-                  <span className="text-xs font-semibold">Subjects</span>
-                </div>
-                <p className="text-xl font-bold text-gray-900">8</p>
-              </div>
-              <div className="border rounded-md p-3 bg-gray-50/50">
-                <div className="flex items-center gap-2 text-gray-600 mb-1">
                   <HelpCircle className="w-4 h-4" />
                   <span className="text-xs font-semibold">Questions</span>
                 </div>
-                <p className="text-xl font-bold text-gray-900">850</p>
+                <p className="text-xl font-bold text-gray-900">{selectedExam.questions}</p>
               </div>
-            </div>
-
-            {/* Subject Breakdown */}
-            <div className="mb-6">
-              <h4 className="text-xs font-bold text-gray-900 mb-3 uppercase tracking-wider">Subject Breakdown</h4>
-              <div className="space-y-3">
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="font-medium text-gray-700">General Knowledge</span>
-                    <span className="text-gray-500">40%</span>
-                  </div>
-                  <div className="w-full bg-gray-100 rounded-full h-1.5">
-                    <div className="bg-blue-600 h-1.5 rounded-full w-[40%]"></div>
-                  </div>
+              <div className="border rounded-md p-3 bg-gray-50/50">
+                <div className="flex items-center gap-2 text-gray-600 mb-1">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-xs font-semibold">Duration</span>
                 </div>
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="font-medium text-gray-700">Mathematics</span>
-                    <span className="text-gray-500">30%</span>
-                  </div>
-                  <div className="w-full bg-gray-100 rounded-full h-1.5">
-                    <div className="bg-blue-600 h-1.5 rounded-full w-[30%]"></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="font-medium text-gray-700">English Literature</span>
-                    <span className="text-gray-500">30%</span>
-                  </div>
-                  <div className="w-full bg-gray-100 rounded-full h-1.5">
-                    <div className="bg-blue-600 h-1.5 rounded-full w-[30%]"></div>
-                  </div>
-                </div>
+                <p className="text-xl font-bold text-gray-900">{selectedExam.duration}m</p>
               </div>
             </div>
 
             {/* Actions */}
             <div className="space-y-3 pt-4 border-t">
-              <button className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
+              <Link href={`/admin/exams/${selectedExam.id}`} className="w-full flex justify-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
                 View Full Details
-              </button>
+              </Link>
               <div className="grid grid-cols-2 gap-3">
                 <button className="flex items-center justify-center gap-2 py-2 border rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                   <Edit2 className="w-4 h-4" /> Edit
@@ -230,12 +211,11 @@ export default function ExamsManagement() {
           <Info className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
           <div>
             <h4 className="text-sm font-bold text-blue-900">Pro Tip</h4>
-            <p className="text-xs text-blue-800 mt-1 leading-relaxed">Double-click any row to instantly jump to full subject management for that exam.</p>
+            <p className="text-xs text-blue-800 mt-1 leading-relaxed">Click 'View Full Details' to manage subjects, questions, and curriculum for this exam.</p>
           </div>
         </div>
 
       </div>
-
     </div>
   );
 }

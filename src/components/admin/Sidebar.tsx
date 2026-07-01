@@ -20,12 +20,14 @@ export default function Sidebar() {
     <div className="w-64 bg-white border-r flex flex-col h-full">
       <div className="h-16 flex items-center px-6 border-b">
         <Activity className="text-blue-600 w-6 h-6 mr-2" />
-        <span className="font-bold text-lg text-blue-600">Odisha Prep Admin</span>
+        <span className="font-bold text-lg text-blue-600">MCQZone Admin</span>
       </div>
 
       <nav className="flex-1 py-6 flex flex-col gap-2 px-4">
         {navItems.map((item) => {
-          const isActive = pathname.startsWith(item.href);
+          const isActive = item.href === "/admin" 
+  ? pathname === "/admin" 
+  : pathname.startsWith(item.href);
           return (
             <Link
               key={item.name}
