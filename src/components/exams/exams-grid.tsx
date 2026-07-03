@@ -1,4 +1,4 @@
-import { exams } from "@/lib/mock-exams";
+import { exams } from "@/lib/mock/mock-exams";
 import { ExamCard } from "./exam-card";
 
 import { Button } from "../ui/button";

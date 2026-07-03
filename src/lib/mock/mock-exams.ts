@@ -42,3 +42,4 @@ export const exams: Exam[] = [
     category: "GK",
   },
 ];
+

@@ -6,7 +6,7 @@ import {
   ChevronLeft, HelpCircle, Bookmark, AlertTriangle, 
   CheckCircle2, BookOpen, Sparkles, ChevronRight, XCircle
 } from "lucide-react";
-import { type QuizQuestion } from "@/lib/dummy-quiz-data";
+import { type QuizQuestion } from "@/lib/mock/dummy-quiz-data";
 
 interface QuizClientProps {
   questions: QuizQuestion[];

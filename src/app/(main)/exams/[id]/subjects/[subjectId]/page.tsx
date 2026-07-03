@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { QuizClient } from "@/components/quiz/quiz-client";
-import { dummyQuestions } from "@/lib/dummy-quiz-data";
+import { dummyQuestions } from "@/lib/mock/dummy-quiz-data";
 
 // This is a Server Component. In the real app, you will fetch questions from your database here based on the params.
 export default async function SubjectQuizPage({ 
