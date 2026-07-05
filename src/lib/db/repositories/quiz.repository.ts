@@ -17,7 +17,8 @@ export async function getQuizBySubject(subjectId: number) {
 
       o.id AS option_id,
       o.option_text,
-      o.display_order
+      o.display_order,
+      o.is_correct
 
     FROM subjects s
 
@@ -52,14 +53,21 @@ export async function getQuizBySubject(subjectId: number) {
   const questionMap = new Map<number, any>();
 
   for (const row of rows) {
-    if (!questionMap.has(row.question_id)) {
-      const question = {
+    let question = questionMap.get(row.question_id);
+
+    if (!question) {
+      question = {
         id: row.question_id,
         question_code: row.question_code,
         question_text: row.question_text,
-        explanation: row.explanation,
+         explanation: {
+         short: row.explanation ?? "",
+         detailed: row.explanation ?? "",
+         keyConcepts: [],
+         tip: "",
+  },
         marks: row.marks,
-        negative_marks: row.negative_marks,
+        correctOptionId: null,
         options: [],
       };
 
@@ -67,11 +75,15 @@ export async function getQuizBySubject(subjectId: number) {
       quiz.questions.push(question);
     }
 
-    questionMap.get(row.question_id).options.push({
+    question.options.push({
       id: row.option_id,
-      option_text: row.option_text,
-      display_order: row.display_order,
+      text: row.option_text,
+      letter: String.fromCharCode(64 + row.display_order),
     });
+
+    if (row.is_correct) {
+      question.correctOptionId = row.option_id;
+    }
   }
 
   return quiz;

@@ -3,6 +3,7 @@ import { Bookmark } from "lucide-react";
 
 export interface ExamCardProps {
   id: string;
+  categorySlug: string;
   title: string;
   description?: string;
   questions?: number | string;
@@ -13,6 +14,7 @@ export interface ExamCardProps {
 
 export function ExamCard({ 
   id, 
+  categorySlug,
   title, 
   description = "Odisha Public Service Foundation AI verified for flow.",
   questions = 0, 
@@ -21,7 +23,7 @@ export function ExamCard({
   difficulty = "Foundation" 
 }: ExamCardProps) {
   return (
-    <Link href={`/exams/${id}`} className="block group">
+   <Link href={`/exams/${categorySlug}/${id}`} className="block group">
       <div className="bg-white rounded-xl border p-5 hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between">
         
         <div>

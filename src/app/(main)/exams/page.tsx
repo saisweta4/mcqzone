@@ -5,49 +5,19 @@ import { TrendingNow } from "@/components/exams/trending-now";
 import { AIExplanation } from "@/components/exams/ai-explanation";
 import { Search, Filter, MapPin } from "lucide-react";
 import { MobileSidebar } from "@/components/exams/mobile-sidebar"; 
+import { getAllCategories } from "@/lib/db/repositories/category.repository";
 
-async function getExamsFromDatabase() {
-  return [
-    {
-      id: "opsc-aso-1",
-      name: "OPSC ASO",
-      subjects: [
-        { id: "sub-1", name: "General Awareness" },
-        { id: "sub-2", name: "Reasoning & Mental Ability" },
-        { id: "sub-3", name: "Mathematics" },
-        { id: "sub-4", name: "English" }
-      ]
-    },
-    {
-      id: "ossc-cgl-2",
-      name: "OSSC CGL",
-      subjects: [
-        { id: "sub-5", name: "Data Interpretation" },
-        { id: "sub-6", name: "Logical Reasoning" },
-        { id: "sub-7", name: "Current Events" }
-      ]
-    },
-    {
-      id: "police-3",
-      name: "Police Exams",
-      subjects: [
-        { id: "sub-8", name: "General English" },
-        { id: "sub-9", name: "Odia Language" },
-        { id: "sub-10", name: "General Studies" }
-      ]
-    }
-  ];
-}
 
 export default async function ExamsPage() {
-  const dynamicExams = await getExamsFromDatabase();
+
+  const categories = await getAllCategories();
 
   return (
     <div className="flex min-h-screen bg-[#f8fafc]">
       
       {/* UPDATED: Added h-screen sticky top-0 here to isolate desktop layout logic */}
       <div className="hidden lg:block shrink-0 h-screen sticky top-0">
-        <Sidebar examCategories={dynamicExams} />
+        <Sidebar examCategories={categories} />
       </div>
 
       <div className="flex-1 flex flex-col min-w-0 w-full">
@@ -55,10 +25,10 @@ export default async function ExamsPage() {
         <header className="px-4 md:px-8 py-3 md:py-0 md:h-[72px] flex flex-wrap md:flex-nowrap items-center justify-between border-b bg-white gap-3 md:gap-4 sticky top-0 z-20">
           
           <div className="flex items-center gap-3">
-            <MobileSidebar examCategories={dynamicExams} />
-            <h1 className="text-lg md:text-xl font-bold text-gray-900">All Exams</h1>
+            <MobileSidebar examCategories={categories} />
+            <h1 className="text-lg md:text-xl font-bold text-gray-900">Exam Categories</h1>
             <span className="bg-blue-50 text-blue-600 text-[10px] md:text-xs font-semibold px-2 md:px-3 py-1 rounded-full whitespace-nowrap">
-              {dynamicExams.length} Available
+              {categories.length} Available
             </span>
           </div>
 
@@ -86,7 +56,10 @@ export default async function ExamsPage() {
 
         <main className="flex-1 p-4 md:p-8 space-y-6 md:space-y-8 overflow-y-auto">
           <ExamsHero />
-          <ExamsGrid />
+          <ExamsGrid
+  type="category"
+  items={categories}
+/>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
@@ -99,8 +72,8 @@ export default async function ExamsPage() {
           
           <footer className="pt-6 md:pt-8 mt-6 md:mt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 text-center md:text-left">
             <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
-               <span className="font-bold text-gray-900 text-sm md:text-xs">ExamSarthi</span>
-               <span>© 2026 ExamSarthi Inc. All rights reserved.</span>
+               <span className="font-bold text-gray-900 text-sm md:text-xs">MCQZone</span>
+               <span>© 2026 MCQZone Inc. All rights reserved.</span>
             </div>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               <a href="#" className="hover:text-gray-600 transition-colors">Privacy Policy</a>

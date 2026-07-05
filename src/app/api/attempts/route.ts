@@ -17,21 +17,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const attempt = await createAttempt(examId);
+   const attempt = {
+  id: 999,
+  exam_id: examId,
+  status: "IN_PROGRESS",
+};
 
     return NextResponse.json({
       success: true,
       data: attempt,
     });
   } catch (error) {
-    console.error(error);
+  console.error("Create Attempt Error:", error);
 
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Failed to create attempt",
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(
+    {
+      success: false,
+      message: String(error),
+    },
+    { status: 500 }
+  );
+}
 }

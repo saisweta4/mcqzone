@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getOptionsByQuestion } from "@/lib/db/repositories/option.repository";
+import { getExamsByCategory } from "@/lib/db/repositories/exam.repository";
 
 export async function GET(
   request: Request,
@@ -8,11 +8,11 @@ export async function GET(
   try {
     const { id } = await params;
 
-    const options = await getOptionsByQuestion(Number(id));
+    const exams = await getExamsByCategory(Number(id));
 
     return NextResponse.json({
       success: true,
-      data: options,
+      data: exams,
     });
   } catch (error) {
     console.error(error);
@@ -20,7 +20,7 @@ export async function GET(
     return NextResponse.json(
       {
         success: false,
-        message: "Unable to fetch options",
+        message: "Unable to fetch exams",
       },
       { status: 500 }
     );

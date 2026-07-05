@@ -7,6 +7,7 @@ import { clsx } from "clsx";
 
 const navItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { name: "Eam Categories", href: "/admin/categories", icon: BookOpen },
   { name: "Exams", href: "/admin/exams", icon: BookOpen },
   { name: "Questions", href: "/admin/questions", icon: HelpCircle },
   { name: "Users", href: "/admin/users", icon: Users },

@@ -6,19 +6,40 @@ import {
   ChevronLeft, HelpCircle, Bookmark, AlertTriangle, 
   CheckCircle2, BookOpen, Sparkles, ChevronRight, XCircle
 } from "lucide-react";
-import { type QuizQuestion } from "@/lib/mock/dummy-quiz-data";
+
+interface QuizOption {
+  id: number;
+  text: string;
+  letter: string;
+}
+
+interface QuizQuestion {
+  id: number;
+  question_code: string;
+  question_text: string;
+  explanation: {
+    short: string;
+    detailed: string;
+    keyConcepts: string[];
+    tip: string;
+  };
+  correctOptionId: number;
+  options: QuizOption[];
+}
 
 interface QuizClientProps {
   questions: QuizQuestion[];
+  examId: number;
   examName: string;
   subjectName: string;
 }
 
-export function QuizClient({ questions, examName, subjectName }: QuizClientProps) {
+export function QuizClient({ questions,examId, examName, subjectName }: QuizClientProps) {
   // --- STATE ---
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>({});
   const [visitedIndices, setVisitedIndices] = useState<Set<number>>(new Set([0]));
+  const [attemptId, setAttemptId] = useState<number | null>(null);
   
   // Track visited questions automatically when index changes
   useEffect(() => {
@@ -28,6 +49,33 @@ export function QuizClient({ questions, examName, subjectName }: QuizClientProps
       return newSet;
     });
   }, [currentIndex]);
+  useEffect(() => {
+  async function createQuizAttempt() {
+    try {
+      const response = await fetch("/api/attempts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          examId,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setAttemptId(result.data.id);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error("Failed to create attempt:", error);
+    }
+  }
+
+  createQuizAttempt();
+}, [examId]);
 
   // Derived variables for the current question
   const question = questions[currentIndex];
@@ -36,7 +84,7 @@ export function QuizClient({ questions, examName, subjectName }: QuizClientProps
   const isCorrect = selectedOptionId === question.correctOptionId;
 
   // --- HANDLERS ---
-  const handleSelectOption = (optionId: string) => {
+  const handleSelectOption = (optionId: number) => {
     if (!hasAnsweredCurrent) {
       setSelectedOptions(prev => ({ ...prev, [question.id]: optionId }));
     }
@@ -126,27 +174,17 @@ export function QuizClient({ questions, examName, subjectName }: QuizClientProps
                 <span className="bg-gray-100 text-gray-700 text-xs font-bold px-3 py-1.5 rounded-full">
                   Question {currentIndex + 1} of {questions.length}
                 </span>
-                <span className="text-sm text-gray-500 flex items-center gap-1.5">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                  </span>
-                  01:45 remaining
-                </span>
               </div>
               <div className="flex items-center gap-4 text-sm font-medium text-gray-500">
                 <button className="flex items-center gap-1.5 hover:text-gray-900 transition-colors">
                   <Bookmark className="h-4 w-4" /> Bookmark
-                </button>
-                <button className="flex items-center gap-1.5 text-red-500 hover:text-red-600 transition-colors">
-                  <AlertTriangle className="h-4 w-4" /> Report
                 </button>
               </div>
             </div>
 
             {/* Question Text */}
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 leading-relaxed">
-              {question.questionText}
+              {question.question_text}
             </h2>
 
             {/* Options List */}
