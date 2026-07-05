@@ -2,10 +2,11 @@ import pool from "../pool";
 
 export async function getAllExams() {
   const result = await pool.query(`
-    SELECT
+  SELECT
   e.id,
   e.category_id,
   c.name AS category_name,
+  c.slug AS category_slug,
   e.title,
   e.slug,
   e.description,
@@ -37,9 +38,10 @@ export async function getExamBySlug(slug: string) {
 export async function getExamsByCategorySlug(categorySlug: string) {
   const result = await pool.query(
     `
-    SELECT
-      e.id,
-      e.category_id,
+  SELECT
+  e.id,
+  e.category_id,
+  c.slug AS category_slug,
       e.title,
       e.slug,
       e.description,

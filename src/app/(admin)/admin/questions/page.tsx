@@ -52,7 +52,11 @@ const {
       <div className="flex-1 flex flex-col space-y-6 min-w-0">
         
         {/* Header & Stats Container */}
-        <QuestionHeader totalQuestions={questions.length} />
+        <QuestionHeader
+  totalQuestions={questions.length}
+  selectedCategory={selectedCategory}
+  selectedSubject={selectedSubject}
+/>
 
         {/* Search & Table Card */}
         <QuestionTable

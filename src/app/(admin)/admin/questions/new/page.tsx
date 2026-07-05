@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import QuestionForm from "@/components/admin/questions/QuestionForm";
 import type { QuizQuestion } from "@/components/admin/questions/types";
@@ -8,6 +9,10 @@ import type { QuizQuestion } from "@/components/admin/questions/types";
 export default function NewQuestionPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+
+  const searchParams = useSearchParams();
+
+const subjectId = searchParams.get("subjectId");
 
   const [question, setQuestion] = useState<QuizQuestion>({
   id: "",
@@ -40,7 +45,7 @@ export default function NewQuestionPage() {
       },
       body: JSON.stringify({
   question_code: `Q${Date.now()}`,
-  subject_id: 1, // change this later when subject dropdown is added
+ subject_id: Number(subjectId),
   question_text: question.questionText,
   explanation: question.explanation.detailed,
   difficulty: "Medium",

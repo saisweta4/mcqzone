@@ -33,7 +33,7 @@ export function ExamsGrid({ type, items }: ExamsGridProps) {
               <ExamCard
                 key={exam.id}
                 id={exam.slug}
-                categorySlug={exam.categorySlug}
+                categorySlug={exam.category_slug}
                 title={exam.title}
                 description={exam.description}
                 questions={exam.total_questions}

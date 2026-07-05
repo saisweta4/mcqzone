@@ -5,10 +5,19 @@ import { Plus, FileUp, LayoutList, Filter, CheckSquare } from "lucide-react";
 
 type Props = {
   totalQuestions: number;
+  selectedCategory: string;
+  selectedSubject: string;
 };
 
-export default function QuestionHeader({ totalQuestions }: Props) {
-  return (
+export default function QuestionHeader({
+  totalQuestions,
+  selectedCategory,
+  selectedSubject,
+}: Props) {
+  const canCreateQuestion =
+  selectedCategory !== "" &&
+  selectedSubject !== "";
+  return(
     <div>
       <div className="flex justify-between items-start mb-6">
         <div>
@@ -27,13 +36,24 @@ export default function QuestionHeader({ totalQuestions }: Props) {
             Bulk Import
           </button>
 
-          <Link
-            href="/admin/questions/new"
-            className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700"
-          >
-            <Plus className="w-4 h-4" />
-            Create Question
-          </Link>
+          {canCreateQuestion ? (
+  <Link
+    href={`/admin/questions/new?subjectId=${selectedSubject}`}
+    className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700"
+  >
+    <Plus className="w-4 h-4" />
+    Create Question
+  </Link>
+) : (
+  <button
+    type="button"
+    disabled
+    className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-white bg-gray-400 cursor-not-allowed"
+  >
+    <Plus className="w-4 h-4" />
+    Create Question
+  </button>
+)}
         </div>
       </div>
 

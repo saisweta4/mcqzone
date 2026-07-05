@@ -1,4 +1,4 @@
-import { gemini } from "@/lib/gemini";
+import { gemini } from "@/lib/ai/gemini";
 import { CHATBOT_SYSTEM_PROMPT } from "@/prompts/chatbot";
 
 export async function chatWithAI(message: string) {

@@ -1,11 +1,12 @@
-"use client";
-
+//"use client";
+import {useState} from "react";
 import { 
   ArrowLeft, Copy, X, Bold, Italic, Underline, Link2, 
   AlignLeft, Shuffle, ChevronDown, Image as ImageIcon, Upload
 } from "lucide-react";
 import { QuizQuestion } from "./types";
-import router from "next/router";
+import { useRouter } from "next/navigation";
+
 
 type Props = {
   question: QuizQuestion;
@@ -29,6 +30,60 @@ export default function QuestionForm({
       }
     }
 
+    const router = useRouter();
+    const [generatingExplanation, setGeneratingExplanation] = useState(false);
+
+    async function handleGenerateExplanation() {
+  if (!question.questionText.trim()) {
+    alert("Please enter the question first.");
+    return;
+  }
+
+  if (question.options.some((option) => !option.text.trim())) {
+    alert("Please fill all options first.");
+    return;
+  }
+
+  if (!question.correctOptionId.trim()) {
+    alert("Please select the correct answer first.");
+    return;
+  }
+
+  try {
+    setGeneratingExplanation(true);
+
+    const correctAnswer = question.options.find((option) => option.id === question.correctOptionId)?.text || "";
+
+    const response = await fetch("/api/ai/explanation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        question: question.questionText,
+        options: question.options.map((option) => option.text),
+        correctAnswer,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to generate explanation.");
+    }
+
+    setQuestion((prev) => ({
+      ...prev,
+      explanation: data.explanation,
+    }));
+  } catch (error) {
+    console.error(error);
+    alert("Failed to generate AI explanation.");
+  } finally {
+    setGeneratingExplanation(false);
+  }
+}
+
     return (
     <div className="flex flex-col relative h-[calc(100vh-80px)] overflow-hidden bg-gray-50/30">
       
@@ -36,7 +91,7 @@ export default function QuestionForm({
       <div className="flex justify-between items-center px-8 py-6 shrink-0 bg-white border-b shadow-sm z-10">
         <div className="flex items-center gap-4">
           <button 
-            onClick={() => router.back()} 
+            onClick={() => router.back()}
             className="text-gray-500 hover:text-gray-900 flex items-center gap-2 text-sm font-bold transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Questions Database
@@ -174,6 +229,18 @@ onChange={(e) =>
               <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">
                 Solution Explanation
               </label>
+              <div className="flex justify-end mb-2">
+  <button
+    type="button"
+    onClick={handleGenerateExplanation}
+    disabled={generatingExplanation}
+    className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+  >
+    {generatingExplanation
+      ? "Generating..."
+      : "✨ Generate AI Explanation"}
+  </button>
+</div>
               <textarea 
                 className="w-full h-32 p-4 border border-gray-200 rounded-lg text-sm text-gray-900 outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 resize-none bg-gray-50/50 leading-relaxed"
                 value={question.explanation.detailed}
