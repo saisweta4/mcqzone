@@ -31,10 +31,23 @@ export default function QuestionHeader({
         </div>
 
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md text-sm font-semibold bg-white hover:bg-gray-50">
-            <FileUp className="w-4 h-4" />
-            Bulk Import
-          </button>
+          {canCreateQuestion ? (
+  <Link
+    href={`/admin/questions/ai-import?subjectId=${selectedSubject}`}
+    className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md text-sm font-semibold bg-white hover:bg-gray-50"
+  >
+    <FileUp className="w-4 h-4" />
+    Bulk Import
+  </Link>
+) : (
+  <button
+    disabled
+    className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md text-sm font-semibold bg-gray-100 text-gray-400 cursor-not-allowed"
+  >
+    <FileUp className="w-4 h-4" />
+    Bulk Import
+  </button>
+)}
 
           {canCreateQuestion ? (
   <Link

@@ -2,14 +2,12 @@ import pool from "../pool";
 
 export async function getAllCategories() {
   try {
-    console.log("Repository reached");
-
     const result = await pool.query(`
       SELECT *
       FROM exam_categories;
     `);
 
-    console.log(result.rows);
+   
 
     return result.rows;
   } catch (error) {

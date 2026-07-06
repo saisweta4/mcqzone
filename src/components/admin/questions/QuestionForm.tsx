@@ -105,9 +105,6 @@ export default function QuestionForm({
           </h1>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 shadow-sm transition-colors">
-            <Copy className="w-4 h-4 text-gray-500" /> Duplicate
-          </button>
           <button
   onClick={onDelete}
   className="flex items-center gap-2 px-4 py-2 border border-red-200 rounded-md text-sm font-semibold text-red-600 bg-red-50 hover:bg-red-100 shadow-sm transition-colors"
