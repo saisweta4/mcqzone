@@ -18,10 +18,10 @@ export function CategoryCard({
       <div className="bg-white rounded-xl border p-5 hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between">
         <div>
           <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-5">
-            <FolderOpen className="h-6 w-6 text-blue-600" />
+            <FolderOpen className="h-6 w-6 text-primary" />
           </div>
 
-          <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors">
             {name}
           </h3>
 
@@ -31,11 +31,11 @@ export function CategoryCard({
         </div>
 
         <div className="pt-5 mt-6 border-t flex items-center justify-between">
-          <span className="text-sm font-medium text-blue-600">
+          <span className="text-sm font-medium text-primary group-hover:text-secondary transition-colors">
             Explore Exams
           </span>
 
-          <ArrowRight className="h-5 w-5 text-blue-600 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-5 w-5 text-primary group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
     </Link>

@@ -1,9 +1,7 @@
 import { Sidebar } from "@/components/exams/sidebar";
 import { ExamsGrid } from "@/components/exams/exams-grid";
 import { ExamsHero } from "@/components/exams/exams-hero";
-import { TrendingNow } from "@/components/exams/trending-now";
 import { AIExplanation } from "@/components/exams/ai-explanation";
-import { Search, Filter, MapPin } from "lucide-react";
 import { MobileSidebar } from "@/components/exams/mobile-sidebar"; 
 import { getAllCategories } from "@/lib/db/repositories/category.repository";
 
@@ -26,31 +24,10 @@ export default async function ExamsPage() {
           
           <div className="flex items-center gap-3">
             <MobileSidebar examCategories={categories} />
-            <h1 className="text-lg md:text-xl font-bold text-gray-900">Exam Categories</h1>
-            <span className="bg-blue-50 text-blue-600 text-[10px] md:text-xs font-semibold px-2 md:px-3 py-1 rounded-full whitespace-nowrap">
+            <h1 className="text-lg md:text-xl font-bold text-gray-900">EXAM CATEGORIES</h1>
+            <span className="bg-blue-50 text-primary text-[10px] md:text-xs font-semibold px-2 md:px-3 py-1 rounded-full whitespace-nowrap">
               {categories.length} Available
             </span>
-          </div>
-
-          <div className="w-full order-3 md:order-none md:flex-1 md:max-w-2xl md:mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search for OPSC, OSSC, Maths..."
-                className="w-full pl-10 pr-4 py-2 md:py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 md:gap-4 shrink-0">
-            <button className="flex items-center gap-1.5 md:gap-2 text-xs md:text-sm font-medium text-gray-600 border px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-white hover:bg-gray-50 transition-colors">
-              <Filter className="h-3.5 w-3.5 md:h-4 md:w-4" /> 
-              <span className="hidden sm:inline">Filters</span>
-            </button>
-            <button className="text-gray-600 hover:text-gray-900 p-1 md:p-0 transition-colors">
-              <MapPin className="h-5 w-5" />
-            </button>
           </div>
         </header>
 
@@ -62,26 +39,10 @@ export default async function ExamsPage() {
 />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
-              <TrendingNow />
-            </div>
             <div className="lg:col-span-2">
               <AIExplanation />
             </div>
           </div>
-          
-          <footer className="pt-6 md:pt-8 mt-6 md:mt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 text-center md:text-left">
-            <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
-               <span className="font-bold text-gray-900 text-sm md:text-xs">MCQZone</span>
-               <span>© 2026 MCQZone Inc. All rights reserved.</span>
-            </div>
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-              <a href="#" className="hover:text-gray-600 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-gray-600 transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-gray-600 transition-colors">Help Center</a>
-              <a href="#" className="hover:text-gray-600 transition-colors">Contact Us</a>
-            </div>
-          </footer>
         </main>
       </div>
     </div>

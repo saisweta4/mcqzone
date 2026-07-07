@@ -153,7 +153,7 @@ onChange={(e) => setTitle(e.target.value)}
 
           <button
             onClick={handleSubmit}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-primary text-white px-4 py-2 rounded"
           >
             {exam ? "Update" : "Create"}
           </button>

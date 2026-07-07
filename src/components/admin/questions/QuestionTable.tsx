@@ -81,7 +81,7 @@ export default function QuestionTable({
 
                 <td className="px-4 py-4">
                   <Link href={`/admin/questions/${q.id}`}>
-                    <Eye className="w-5 h-5 text-blue-600" />
+                    <Eye className="w-5 h-5 text-primary" />
                   </Link>
                 </td>
 

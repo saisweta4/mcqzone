@@ -23,18 +23,18 @@
      PRIMARY BRAND COLORS
   ========================= */
 
-  --primary: 217 61% 56%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 214 61% 56%;
+--primary-foreground: 0 0% 100%;
 
-  --primary-dark: 214 50% 25%;
-  --primary-light: 217 100% 95%;
+--primary-dark: 214 56% 42%;
+--primary-light: 214 100% 95%;
 
-  /* =========================
-     SECONDARY
-  ========================= */
+/* =========================
+   SECONDARY
+========================= */
 
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 215 28% 17%;
+--secondary: 215 56% 42%;
+--secondary-foreground: 0 0% 100%;
 
   /* =========================
      MUTED
@@ -259,19 +259,23 @@ body {
 }
 
 .primary-button-gradient {
-  background:
-    linear-gradient(
-      135deg,
-      #4a7dd3 0%,
-      #3b6cc5 100%
-    );
+  background: #4a7dd3;
+  color:white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.primary-button-gradient:hover {
+  background:  #3b6cc5 ;
+  color:white;
 }
 
 .exam-card {
   background: white;
   border: 1px solid #e5e7eb;
   box-shadow:
-    0 1px 2px rgba(0,0,0,.04);
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
   transition: all 0.3s ease;
 }

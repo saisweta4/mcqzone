@@ -3,7 +3,6 @@ import { ChevronLeft, Search, Bell } from "lucide-react";
 
 import { Sidebar } from "@/components/exams/sidebar";
 import { MobileSidebar } from "@/components/exams/mobile-sidebar";
-import { ExamsHero } from "@/components/exams/exams-hero";
 import { SubjectsGrid } from "@/components/subjects/subjects-grid";
 
 import { getAllCategories } from "@/lib/db/repositories/category.repository";
@@ -67,8 +66,6 @@ export default async function ExamPage({
         </header>
 
         <main className="flex-1 p-8 space-y-8">
-
-          <ExamsHero />
 
           <SubjectsGrid
   subjects={subjects}

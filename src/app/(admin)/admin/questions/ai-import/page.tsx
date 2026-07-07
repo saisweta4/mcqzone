@@ -166,7 +166,7 @@ const updateOption = (
 <button
   onClick={handleFormat}
   disabled={loading}
-  className="px-5 py-2 bg-blue-600 text-white rounded-lg"
+  className="px-5 py-2 bg-primary text-white rounded-lg"
 >
   {loading ? "Formatting..." : "✨ Format with AI"}
 </button>
@@ -242,7 +242,7 @@ const updateOption = (
   type="button"
   onClick={() => handleGenerateExplanation(index)}
   disabled={generatingIndex === index}
-  className="ml-5 px-2 py-1 rounded-md bg-gray-200 text-blue-600 hover:bg-gray-300 disabled:opacity-50 font-semibold"
+  className="ml-5 px-2 py-1 rounded-md bg-gray-200 text-primary hover:bg-gray-300 disabled:opacity-50 font-semibold"
 >
   {generatingIndex === index
     ? "Generating..."

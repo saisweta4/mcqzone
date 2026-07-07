@@ -15,7 +15,7 @@ export default function ExamToolbar({ onCreate }: ExamToolbarProps) {
             <button className="flex items-center gap-2 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
               <Download className="w-4 h-4" /> Export CSV
             </button>
-            <button onClick={onCreate} className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+            <button onClick={onCreate} className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-primary hover:bg-blue-700">
               <Plus className="w-4 h-4" /> Create New Exam
             </button>
           </div>

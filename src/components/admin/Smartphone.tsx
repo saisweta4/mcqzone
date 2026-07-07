@@ -29,7 +29,7 @@ export default function Smartphone({ question, variant, className = "" }: Smartp
     <div className={`border-8 border-gray-900 rounded-[2.5rem] bg-gray-50 overflow-hidden shadow-xl relative flex flex-col ${className}`}>
       
       {/* Phone Header */}
-      <div className="bg-blue-600 text-white px-4 py-3 flex items-center justify-between shadow-sm shrink-0">
+      <div className="bg-primary text-white px-4 py-3 flex items-center justify-between shadow-sm shrink-0">
         <div className="flex items-center gap-2">
           <ArrowLeft className="w-4 h-4" />
           <span className={`font-bold tracking-wide ${isManagement ? 'text-sm' : 'text-[11px] uppercase'}`}>
@@ -104,7 +104,7 @@ export default function Smartphone({ question, variant, className = "" }: Smartp
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs font-semibold text-gray-500 cursor-pointer">Previous</span>
-                <button className="bg-blue-600 text-white text-sm font-bold py-2 px-6 rounded-md hover:bg-blue-700">Save & Next</button>
+                <button className="bg-primary text-white text-sm font-bold py-2 px-6 rounded-md hover:bg-blue-700">Save & Next</button>
               </div>
             </>
           ) : (
@@ -115,7 +115,7 @@ export default function Smartphone({ question, variant, className = "" }: Smartp
                 </h4>
                 <p className="text-[11px] text-blue-900 leading-relaxed line-clamp-3">{question.explanation.detailed}</p>
               </div>
-              <button className="w-full bg-blue-600 text-white text-sm font-bold py-3.5 rounded-xl shadow-md hover:bg-blue-700">
+              <button className="w-full bg-primary text-white text-sm font-bold py-3.5 rounded-xl shadow-md hover:bg-blue-700">
                 Next Question
               </button>
             </>

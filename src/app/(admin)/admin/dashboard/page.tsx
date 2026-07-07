@@ -27,7 +27,7 @@ export default function Dashboard() {
             <Calendar className="w-4 h-4" />
             Last 30 Days
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-primary hover:bg-blue-700">
             <Plus className="w-4 h-4" />
             Add Question
           </button>
@@ -37,10 +37,10 @@ export default function Dashboard() {
       {/* Stats Cards */}
       <div className="grid grid-cols-4 gap-4">
         {[
-          { title: "TOTAL USERS", value: "12,450", trend: "+12.5%", isUp: true, icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
-          { title: "TOTAL EXAMS", value: "48", trend: "+4.2%", isUp: true, icon: BookOpen, color: "text-blue-600", bg: "bg-blue-50" },
-          { title: "TOTAL SUBJECTS", value: "156", trend: "+2.1%", isUp: true, icon: Layers, color: "text-blue-600", bg: "bg-blue-50" },
-          { title: "TOTAL QUESTIONS", value: "8,920", trend: "-0.5%", isUp: false, icon: HelpCircle, color: "text-blue-600", bg: "bg-blue-50" },
+          { title: "TOTAL USERS", value: "12,450", trend: "+12.5%", isUp: true, icon: Users, color: "text-primary", bg: "bg-blue-50" },
+          { title: "TOTAL EXAMS", value: "48", trend: "+4.2%", isUp: true, icon: BookOpen, color: "text-primary", bg: "bg-blue-50" },
+          { title: "TOTAL SUBJECTS", value: "156", trend: "+2.1%", isUp: true, icon: Layers, color: "text-primary", bg: "bg-blue-50" },
+          { title: "TOTAL QUESTIONS", value: "8,920", trend: "-0.5%", isUp: false, icon: HelpCircle, color: "text-primary", bg: "bg-blue-50" },
         ].map((stat, i) => (
           <div key={i} className="bg-white p-5 rounded-lg border flex flex-col justify-between h-32">
             <div className="flex justify-between items-start">
@@ -131,7 +131,7 @@ export default function Dashboard() {
             ))}
           </div>
           
-          <button className="w-full text-center text-sm font-medium text-blue-600 hover:text-blue-700 mt-4 pt-4 border-t">
+          <button className="w-full text-center text-sm font-medium text-primary hover:text-blue-700 mt-4 pt-4 border-t">
             View Full Audit Log &rarr;
           </button>
         </div>
@@ -170,7 +170,7 @@ export default function Dashboard() {
                 { id: "Q-9817", q: "What is the state animal of Odisha?", sub: "General Knowledge", exam: "OSSC CGL", diff: "Easy", time: "5 hrs ago" },
               ].map((row, i) => (
                 <tr key={i} className="hover:bg-gray-50/50">
-                  <td className="px-6 py-4 font-medium text-blue-600 cursor-pointer">{row.id}</td>
+                  <td className="px-6 py-4 font-medium text-primary cursor-pointer">{row.id}</td>
                   <td className="px-6 py-4 truncate max-w-xs">{row.q}</td>
                   <td className="px-6 py-4">
                     <span className="bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full text-[11px] font-medium border border-gray-200">

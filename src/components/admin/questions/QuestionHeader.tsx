@@ -52,7 +52,7 @@ export default function QuestionHeader({
           {canCreateQuestion ? (
   <Link
     href={`/admin/questions/new?subjectId=${selectedSubject}`}
-    className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700"
+    className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-white bg-primary hover:bg-blue-700"
   >
     <Plus className="w-4 h-4" />
     Create Question
@@ -74,7 +74,7 @@ export default function QuestionHeader({
 
         <div className="p-5 border rounded-xl bg-white shadow-sm flex gap-4 items-center">
           <div className="p-3 bg-blue-50 rounded-lg">
-            <LayoutList className="w-6 h-6 text-blue-600" />
+            <LayoutList className="w-6 h-6 text-primary" />
           </div>
 
           <div>
@@ -90,7 +90,7 @@ export default function QuestionHeader({
 
         <div className="p-5 border rounded-xl bg-white shadow-sm flex gap-4 items-center">
           <div className="p-3 bg-blue-50 rounded-lg">
-            <Filter className="w-6 h-6 text-blue-600" />
+            <Filter className="w-6 h-6 text-primary" />
           </div>
 
           <div>
@@ -106,7 +106,7 @@ export default function QuestionHeader({
 
         <div className="p-5 border rounded-xl bg-white shadow-sm flex gap-4 items-center">
           <div className="p-3 bg-blue-50 rounded-lg">
-            <CheckSquare className="w-6 h-6 text-blue-600" />
+            <CheckSquare className="w-6 h-6 text-primary" />
           </div>
 
           <div>

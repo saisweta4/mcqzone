@@ -14,7 +14,7 @@ export default function CategoryPreview({ category }: Props) {
         
         {/* Preview Card */}
         <div className="bg-white rounded-lg border shadow-sm overflow-hidden flex flex-col">
-          <div className="h-1 w-full bg-blue-600"></div>
+          <div className="h-1 w-full bg-primary"></div>
           <div className="p-5 flex-1">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-gray-900">Quick Preview</h3>
@@ -49,7 +49,7 @@ export default function CategoryPreview({ category }: Props) {
 
             {/* Actions */}
             <div className="space-y-3 pt-4 border-t">
-              <Link href={`/admin/categories/${category.id}`} className="w-full flex justify-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
+              <Link href={`/admin/categories/${category.id}`} className="w-full flex justify-center py-2.5 bg-primary hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors">
                Manage Exams
               </Link>
               <div className="grid grid-cols-2 gap-3">
@@ -67,7 +67,7 @@ export default function CategoryPreview({ category }: Props) {
 
         {/* Pro Tip */}
         <div className="bg-blue-50 rounded-lg p-4 flex gap-3 items-start border border-blue-100">
-          <Info className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+          <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
           <div>
             <h4 className="text-sm font-bold text-blue-900">Pro Tip</h4>
             <p className="text-xs text-blue-800 mt-1 leading-relaxed">Click 'View Full Details' to manage subjects, questions, and curriculum for this category.</p>

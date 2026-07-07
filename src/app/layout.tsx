@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ExamSarthi | Odisha Government Exams",
+  title: "MCQZone | Odisha Government Exams",
   description: "Prepare smarter for OPSC, OSSC, and OSSSC exams.",
 };
 

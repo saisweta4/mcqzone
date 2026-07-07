@@ -16,7 +16,6 @@ import {
 // Import your new global sidebars
 import { Sidebar } from "@/components/exams/sidebar";
 import { MobileSidebar } from "@/components/exams/mobile-sidebar";
-import { ExamsHero } from "@/components/exams/exams-hero";
 import { ExamsGrid } from "@/components/exams/exams-grid";
 
 // Map string icon names from the DB to actual Lucide components
@@ -77,29 +76,11 @@ const exams = await getExamsByCategorySlug(categorySlug);
         {/* Scrollable Content */}
         <div className="flex-1 p-4 md:p-8 overflow-y-auto">
           
-          {/* Hero Banner */}
-          <ExamsHero />
-
 <ExamsGrid
   type="exam"
   items={exams}
 />
 </div>
-
-          {/* Subject Grid Section */}
-          
-        
-        {/* Footer */}
-        <footer className="border-t p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500 bg-gray-50/50 text-center sm:text-left mt-auto">
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-            <Link href="#" className="hover:text-gray-900">Privacy Policy</Link>
-            <Link href="#" className="hover:text-gray-900">Terms of Service</Link>
-            <Link href="#" className="hover:text-gray-900">Help Center</Link>
-          </div>
-          <div>
-            © 2026 Odisha MCQZone.
-          </div>
-        </footer>
 
       </main>
     </div>

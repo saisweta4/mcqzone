@@ -55,13 +55,13 @@ return(<div className="bg-white rounded-lg border flex flex-col">
                     <tr 
                       key={category.id} 
                       onClick={() => onSelectCategory(category.id)}
-                      className={`cursor-pointer ${isActive ? "bg-blue-50/50 border-l-2 border-l-blue-600" : "hover:bg-gray-50/50"}`}
+                      className={`cursor-pointer ${isActive ? "bg-blue-50/50 border-l-2 border-l-primary" : "hover:bg-gray-50/50"}`}
                     >
                       <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
                         <input type="checkbox" className="rounded border-gray-300" />
                       </td>
                       <td className="px-6 py-4">
-                        <Link href={`/admin/categories/${category.id}`} className="hover:text-blue-600 transition-colors">
+                        <Link href={`/admin/categories/${category.id}`} className="hover:text-primary transition-colors">
                           <p className="font-semibold text-gray-900">{category.name}</p>
                           <p className="text-xs text-gray-500">{category.id}</p>
                         </Link>
@@ -77,7 +77,7 @@ return(<div className="bg-white rounded-lg border flex flex-col">
 </td>
                       <td className="px-6 py-4 text-right text-gray-400">
                         <div className="flex items-center justify-end gap-3">
-                          <Link href={`/admin/categories/${category.id}`} className="hover:text-blue-600 transition-colors">
+                          <Link href={`/admin/categories/${category.id}`} className="hover:text-primary transition-colors">
                             <Eye className="w-4 h-4" />
                           </Link>
                          <button
@@ -85,7 +85,7 @@ return(<div className="bg-white rounded-lg border flex flex-col">
     e.stopPropagation();
     onEdit(category);
   }}
-  className="hover:text-blue-600 transition-colors"
+  className="hover:text-primary transition-colors"
 >
   <Edit2 className="w-4 h-4" />
 </button>
@@ -113,7 +113,7 @@ return(<div className="bg-white rounded-lg border flex flex-col">
             <p>Showing <span className="font-medium text-gray-900">1-{categories.length}</span> of <span className="font-medium text-gray-900">{categories.length}</span> categories</p>
             <div className="flex gap-1">
               <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50"><ChevronLeft className="w-4 h-4" /></button>
-              <button className="w-8 h-8 flex items-center justify-center border rounded bg-blue-50 text-blue-600 border-blue-200 font-medium">1</button>
+              <button className="w-8 h-8 flex items-center justify-center border rounded bg-blue-50 text-primary border-blue-200 font-medium">1</button>
               <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50"><ChevronRight className="w-4 h-4" /></button>
             </div>
           </div>

@@ -28,7 +28,7 @@ export default function SettingsManagement() {
             <ExternalLink className="w-4 h-4" />
             View Live Site
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-primary hover:bg-blue-700 transition-colors shadow-sm">
             <Save className="w-4 h-4" />
             Save All Changes
           </button>
@@ -38,7 +38,7 @@ export default function SettingsManagement() {
       {/* Admin Team Management */}
       <section>
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+          <div className="p-2 bg-blue-50 text-primary rounded-lg">
             <Shield className="w-5 h-5" />
           </div>
           <div>
@@ -58,7 +58,7 @@ export default function SettingsManagement() {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="text-base font-bold text-gray-900">Arun Kumar Dash</h3>
-                  <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Super Admin</span>
+                  <span className="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Super Admin</span>
                 </div>
                 <div className="text-xs text-gray-500 space-y-1">
                   <p className="flex items-center gap-1.5"><Globe className="w-3.5 h-3.5" /> arun.dash@odisha.gov.in</p>
@@ -78,7 +78,7 @@ export default function SettingsManagement() {
           <div className="p-6">
             <div className="flex justify-between items-center mb-4">
               <p className="text-sm font-medium text-gray-700">Platform Administrators <span className="text-gray-400 font-normal ml-1">A total of 6 users have administrative access.</span></p>
-              <button className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors">
+              <button className="flex items-center gap-2 px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors">
                 <UserPlus className="w-4 h-4" /> Add New Admin
               </button>
             </div>
@@ -118,7 +118,7 @@ export default function SettingsManagement() {
                       <td className="px-6 py-3 text-gray-500 text-xs">{user.activity}</td>
                       <td className="px-6 py-3 text-right">
                         <div className="flex justify-end gap-3 text-gray-400">
-                          <button className="hover:text-blue-600"><Edit2 className="w-4 h-4" /></button>
+                          <button className="hover:text-primary"><Edit2 className="w-4 h-4" /></button>
                           <button className="hover:text-red-600"><Trash2 className="w-4 h-4" /></button>
                         </div>
                       </td>
@@ -138,7 +138,7 @@ export default function SettingsManagement() {
       {/* Website & Platform Branding */}
       <section>
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+          <div className="p-2 bg-blue-50 text-primary rounded-lg">
             <Globe className="w-5 h-5" />
           </div>
           <div>
@@ -181,11 +181,11 @@ export default function SettingsManagement() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-gray-700 mb-1">Helpdesk URL</label>
-                    <input type="url" defaultValue="https://help.odishaprep.gov.in" className="w-full px-3 py-2 border rounded-md text-sm text-blue-600 outline-none focus:ring-1 focus:ring-blue-500" />
+                    <input type="url" defaultValue="https://help.odishaprep.gov.in" className="w-full px-3 py-2 border rounded-md text-sm text-primary outline-none focus:ring-1 focus:ring-blue-500" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-700 mb-1">Terms of Service URL</label>
-                    <input type="url" defaultValue="https://prep.gov.in/terms" className="w-full px-3 py-2 border rounded-md text-sm text-blue-600 outline-none focus:ring-1 focus:ring-blue-500" />
+                    <input type="url" defaultValue="https://prep.gov.in/terms" className="w-full px-3 py-2 border rounded-md text-sm text-primary outline-none focus:ring-1 focus:ring-blue-500" />
                   </div>
                 </div>
                 <div>
@@ -212,7 +212,7 @@ export default function SettingsManagement() {
                     <p className="text-[10px] text-gray-400 mt-1">PNG or SVG, Max 2MB. Recommended: 500x150px</p>
                   </div>
                   <div className="w-20 h-20 border rounded-lg bg-white flex items-center justify-center shadow-sm shrink-0">
-                    <ImageIcon className="w-8 h-8 text-blue-600" />
+                    <ImageIcon className="w-8 h-8 text-primary" />
                   </div>
                 </div>
               </div>

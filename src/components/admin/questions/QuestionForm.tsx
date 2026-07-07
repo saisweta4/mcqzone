@@ -99,7 +99,7 @@ export default function QuestionForm({
           <div className="h-5 w-px bg-gray-300"></div>
           <h1 className="text-xl font-bold text-gray-900 flex items-center gap-3">
             Edit Question 
-            <span className="bg-blue-50 text-blue-600 text-xs px-2.5 py-1 rounded-full border border-blue-200 tracking-wide">
+            <span className="bg-blue-50 text-primary text-xs px-2.5 py-1 rounded-full border border-blue-200 tracking-wide">
               ID: {question.id}
             </span>
           </h1>
@@ -186,7 +186,7 @@ onChange={() =>
     correctOptionId: opt.id,
   })
 }
-                      className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer" 
+                      className="w-5 h-5 text-primary border-gray-300 focus:ring-blue-500 cursor-pointer" 
                     />
                     <input 
                       type="text" 
@@ -231,7 +231,7 @@ onChange={(e) =>
     type="button"
     onClick={handleGenerateExplanation}
     disabled={generatingExplanation}
-    className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+    className="px-4 py-2 rounded-md bg-primary text-white hover:bg-blue-700 disabled:opacity-50"
   >
     {generatingExplanation
       ? "Generating..."
@@ -301,7 +301,7 @@ onChange={(e) =>
           <div className="flex items-center gap-4">
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Status</span>
             <div className="flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-md border border-blue-100">
-              <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
+              <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
               <span className="text-xs font-bold text-blue-700">Published to Platform</span>
             </div>
           </div>
@@ -322,7 +322,7 @@ onChange={(e) =>
   <button
   onClick={handleSave}
   disabled={saving}
-  className="flex items-center gap-2 px-8 py-2.5 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md disabled:opacity-50"
+  className="flex items-center gap-2 px-8 py-2.5 rounded-lg text-sm font-bold text-white bg-primary hover:bg-blue-700 shadow-md disabled:opacity-50"
 >
   <Upload className="w-4 h-4" />
   {saving ? "Saving..." : "Publish Question"}

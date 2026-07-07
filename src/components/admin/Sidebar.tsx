@@ -20,8 +20,8 @@ export default function Sidebar() {
   return (
     <div className="w-64 bg-white border-r flex flex-col h-full">
       <div className="h-16 flex items-center px-6 border-b">
-        <Activity className="text-blue-600 w-6 h-6 mr-2" />
-        <span className="font-bold text-lg text-blue-600">MCQZone Admin</span>
+        <Activity className="text-primary w-6 h-6 mr-2" />
+        <span className="font-bold text-lg text-primary">MCQZone Admin</span>
       </div>
 
       <nav className="flex-1 py-6 flex flex-col gap-2 px-4">
@@ -36,7 +36,7 @@ export default function Sidebar() {
               className={clsx(
                 "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                 isActive 
-                  ? "bg-blue-50 text-blue-700 border-r-4 border-blue-600" 
+                  ? "bg-blue-50 text-blue-700 border-r-4 border-primary" 
                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               )}
             >

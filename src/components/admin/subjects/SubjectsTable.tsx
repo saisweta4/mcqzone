@@ -41,7 +41,7 @@ export default function SubjectsTable({
               <td className="p-4">
                 <div className="flex justify-end gap-3">
                   <button onClick={() => onEdit(subject)}>
-                    <Edit2 className="w-4 h-4 text-blue-600" />
+                    <Edit2 className="w-4 h-4 text-primary" />
                   </button>
 
                   <button onClick={() => onDelete(subject)}>

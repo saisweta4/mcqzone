@@ -28,7 +28,7 @@ export default function UserManagement() {
             <Download className="w-4 h-4" />
             Export CSV
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-primary hover:bg-blue-700">
             <Plus className="w-4 h-4" />
             Add New User
           </button>
@@ -130,7 +130,7 @@ export default function UserManagement() {
           <div className="flex items-center gap-1">
             <button className="px-3 py-1.5 border rounded-md hover:bg-gray-50 font-medium">Previous</button>
             <div className="flex gap-1 mx-2">
-              <button className="w-8 h-8 flex items-center justify-center border rounded bg-blue-50 text-blue-600 border-blue-200 font-medium">1</button>
+              <button className="w-8 h-8 flex items-center justify-center border rounded bg-blue-50 text-primary border-blue-200 font-medium">1</button>
               <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50 font-medium text-gray-700">2</button>
               <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50 font-medium text-gray-700">3</button>
               <span className="flex items-center justify-center w-8 text-gray-400">...</span>
@@ -143,7 +143,7 @@ export default function UserManagement() {
       {/* Stats Cards Bottom */}
       <div className="grid grid-cols-3 gap-6 pt-2">
         <div className="bg-blue-50/50 p-6 rounded-lg border border-blue-100 flex flex-col justify-center">
-          <p className="text-sm text-blue-600 font-semibold mb-2">New Users Today</p>
+          <p className="text-sm text-primary font-semibold mb-2">New Users Today</p>
           <h3 className="text-3xl font-bold text-gray-900">124</h3>
         </div>
         <div className="bg-white p-6 rounded-lg border flex flex-col justify-center">

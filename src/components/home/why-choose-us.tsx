@@ -20,7 +20,7 @@ export function WhyChooseUs() {
   return (
     <section className="section-spacing bg-blue-50/50">
       <div className="container-custom text-center">
-        <h2 className="text-3xl font-bold text-foreground mb-4">Why Odisha ExamSarthi?</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Why MCQZone?</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto mb-12">
           We combine local exam expertise with cutting-edge technology to give you the ultimate edge.
         </p>

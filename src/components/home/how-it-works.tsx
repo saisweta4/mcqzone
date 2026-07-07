@@ -32,13 +32,13 @@ export function HowItWorks() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((item, idx) => (
-            <div key={idx} className="relative p-6 border rounded-2xl hover:border-primary/50 transition-colors">
+            <div key={idx} className="relative p-6 border rounded-2xl hover:border-primary/50 shadow-sm transition-all">
               <div className="text-5xl font-extrabold text-blue-50/50 absolute top-4 right-4 z-0">
                 {item.step}
               </div>
               <div className="relative z-10 pt-4">
                 <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <p className="text-sm text-primary-200 text-shadow-2xl">{item.desc}</p>
               </div>
             </div>
           ))}

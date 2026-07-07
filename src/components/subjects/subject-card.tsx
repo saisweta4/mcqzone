@@ -27,7 +27,7 @@ export function SubjectCard({
       <div className="bg-white border rounded-xl overflow-hidden hover:shadow-md transition-shadow group cursor-pointer flex flex-col h-full">
         <div className="p-4 md:p-5 flex-1">
           <div className="flex justify-between items-start mb-4">
-            <div className="bg-blue-50 text-blue-600 p-2 rounded-lg shrink-0">
+            <div className="bg-blue-50 text-primary p-2 rounded-lg shrink-0">
               <Icon className="h-4 w-4 md:h-5 md:w-5" />
             </div>
 
@@ -46,11 +46,11 @@ export function SubjectCard({
         </div>
 
         <div className="border-t px-4 md:px-5 py-3 bg-gray-50/50 flex justify-between items-center group-hover:bg-blue-50 transition-colors mt-auto">
-          <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider group-hover:text-blue-600">
+          <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider group-hover:text-primary">
             Explore Topics
           </span>
 
-          <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600" />
+          <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-primary" />
         </div>
       </div>
     </Link>
