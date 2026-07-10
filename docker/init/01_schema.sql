@@ -136,29 +136,6 @@ CREATE TABLE options (
 
 
 
-CREATE TABLE attempts (
-    id SERIAL PRIMARY KEY,
-
-    user_id TEXT NOT NULL,
-
-    exam_id INT NOT NULL,
-
-    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    submitted_at TIMESTAMP,
-
-    status VARCHAR(20) DEFAULT 'IN_PROGRESS',
-
-    score NUMERIC(5,2),
-
-    total_marks NUMERIC(5,2),
-
-    CONSTRAINT fk_attempt_exam
-        FOREIGN KEY (exam_id)
-        REFERENCES exams(id)
-        ON DELETE CASCADE
-);
-
 
 
 CREATE TABLE attempt_answers (
@@ -187,4 +164,79 @@ CREATE TABLE attempt_answers (
         FOREIGN KEY (selected_option_id)
         REFERENCES options(id)
         ON DELETE SET NULL
+);
+
+CREATE TABLE users (
+
+    clerk_user_id TEXT PRIMARY KEY,
+
+    email VARCHAR(255) UNIQUE NOT NULL,
+
+    first_name VARCHAR(100),
+
+    last_name VARCHAR(100),
+
+    image_url TEXT,
+
+    role VARCHAR(20)
+        DEFAULT 'STUDENT'
+        CHECK (role IN ('ADMIN', 'STUDENT')),
+
+    is_active BOOLEAN DEFAULT TRUE,
+
+    last_login TIMESTAMP,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+);
+
+CREATE TABLE attempts (
+
+    id SERIAL PRIMARY KEY,
+
+    user_id TEXT NOT NULL,
+
+    exam_id INT NOT NULL,
+
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    submitted_at TIMESTAMP,
+
+    status VARCHAR(20) DEFAULT 'IN_PROGRESS',
+
+    score NUMERIC(5,2),
+
+    total_marks NUMERIC(5,2),
+
+    CONSTRAINT fk_attempt_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(clerk_user_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_attempt_exam
+        FOREIGN KEY (exam_id)
+        REFERENCES exams(id)
+        ON DELETE CASCADE
+
+);
+
+CREATE TABLE login_history (
+
+    id SERIAL PRIMARY KEY,
+
+    user_id TEXT NOT NULL,
+
+    login_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    ip_address VARCHAR(100),
+
+    user_agent TEXT,
+
+    CONSTRAINT fk_login_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(clerk_user_id)
+        ON DELETE CASCADE
+
 );
