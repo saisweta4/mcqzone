@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAllExams,createExam,updateExam,deleteExam } from "@/lib/db/repositories/exam.repository";
+import { requireAdminApi } from "@/lib/api";
+
 
 export async function GET() {
   try {
@@ -23,6 +25,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdminApi();
+
+  if ("error" in auth) {
+    return auth.error;
+  }
   try {
     const body = await request.json();
 

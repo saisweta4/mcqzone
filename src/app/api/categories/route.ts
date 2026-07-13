@@ -1,5 +1,6 @@
 import { NextRequest,NextResponse } from "next/server";
 import { getAllCategories,createCategory,  updateCategory, deleteCategory} from "@/lib/db/repositories/category.repository";
+import { requireAdminApi } from "@/lib/api";
 
 export async function GET() {
   try {
@@ -22,6 +23,12 @@ export async function GET() {
   }
 }
 export async function POST(request: NextRequest) {
+  const auth = await requireAdminApi();
+
+  if ("error" in auth) {
+    return auth.error;
+  }
+  
   try {
     const body = await request.json();
 

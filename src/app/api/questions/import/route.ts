@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import { createQuestion } from "@/lib/db/repositories/question.repository";
+import { requireAdminApi } from "@/lib/api";
 
 export async function POST(request: Request) {
+  const auth = await requireAdminApi();
+
+  if ("error" in auth) {
+    return auth.error;
+  }
   try {
     const { subjectId, questions } = await request.json();
 

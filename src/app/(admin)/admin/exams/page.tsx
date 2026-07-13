@@ -1,16 +1,14 @@
-import ExamsClient from "./ExamsClient"
-
-async function getExams() {
-  const res = await fetch("http://localhost:3000/api/exams", {
-    cache: "no-store",
-  });
-
-  const json = await res.json();
-  return json.data;
-}
+import { getAllExams } from "@/lib/db/repositories/exam.repository";
+import ExamsClient from "./ExamsClient";
 
 export default async function ExamsPage() {
-  const exams = await getExams();
+  const exams = await getAllExams();
 
-  return <ExamsClient initialExams={exams} />;
+  console.log(exams);
+
+  return (
+    <ExamsClient
+      initialExams={exams}
+    />
+  );
 }

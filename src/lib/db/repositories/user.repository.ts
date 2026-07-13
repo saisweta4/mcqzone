@@ -1,7 +1,7 @@
 import pool from "../pool";
 
 export async function createUser(data: {
-  clerkUserId: string;
+  clerkId: string;
   email: string;
   firstName: string | null;
   lastName: string | null;
@@ -11,7 +11,7 @@ export async function createUser(data: {
     `
     INSERT INTO users
     (
-      clerk_user_id,
+      clerk_id,
       email,
       first_name,
       last_name,
@@ -19,16 +19,12 @@ export async function createUser(data: {
     )
     VALUES
     (
-      $1,
-      $2,
-      $3,
-      $4,
-      $5
+      $1,$2,$3,$4,$5
     )
     RETURNING *;
     `,
     [
-      data.clerkUserId,
+      data.clerkId,
       data.email,
       data.firstName,
       data.lastName,
@@ -39,21 +35,22 @@ export async function createUser(data: {
   return result.rows[0];
 }
 
-export async function getUserByClerkId(clerkUserId: string) {
+export async function getUserByClerkId(clerkId: string) {
   const result = await pool.query(
     `
     SELECT *
     FROM users
-    WHERE clerk_user_id = $1;
+    WHERE clerk_id = $1
+    LIMIT 1;
     `,
-    [clerkUserId]
+    [clerkId]
   );
 
-  return result.rows[0];
+  return result.rows[0] ?? null;
 }
 
 export async function updateUser(data: {
-  clerkUserId: string;
+  clerkId: string;
   email: string;
   firstName: string | null;
   lastName: string | null;
@@ -63,16 +60,15 @@ export async function updateUser(data: {
     `
     UPDATE users
     SET
-      email = $2,
-      first_name = $3,
-      last_name = $4,
-      image_url = $5,
-      updated_at = CURRENT_TIMESTAMP
-    WHERE clerk_user_id = $1
+      email=$2,
+      first_name=$3,
+      last_name=$4,
+      image_url=$5
+    WHERE clerk_id=$1
     RETURNING *;
     `,
     [
-      data.clerkUserId,
+      data.clerkId,
       data.email,
       data.firstName,
       data.lastName,
@@ -83,24 +79,12 @@ export async function updateUser(data: {
   return result.rows[0];
 }
 
-export async function updateLastLogin(clerkUserId: string) {
+export async function deleteUser(clerkId: string) {
   await pool.query(
     `
-    UPDATE users
-    SET
-      last_login = CURRENT_TIMESTAMP
-    WHERE clerk_user_id = $1;
+    DELETE FROM users
+    WHERE clerk_id=$1;
     `,
-    [clerkUserId]
+    [clerkId]
   );
-}
-
-export async function getAllUsers() {
-  const result = await pool.query(`
-    SELECT *
-    FROM users
-    ORDER BY created_at DESC;
-  `);
-
-  return result.rows;
 }
