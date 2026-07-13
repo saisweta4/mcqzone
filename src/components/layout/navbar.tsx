@@ -7,6 +7,7 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
+import Image from "next/image";
 
 export function Navbar() {
   const { isSignedIn } = useUser();
@@ -15,19 +16,24 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
       <div className="container-custom flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-primary-dark">
-            MCQZone
-          </span>
+        <Link href="/" className="flex items-center">
+
+        <Image
+        src="/images/logo_name.png"
+        alt="Logo"
+        width={200}
+        height={200}
+      />
+
         </Link>
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-foreground">
           <Link href="/exams" className="hover:text-primary transition-colors">
-            Mock Tests
+            Exams
           </Link>
 
-          <Link href="#" className="hover:text-primary transition-colors">
+          <Link href="/study-plan" className="hover:text-primary transition-colors">
             Study Plan
           </Link>
 

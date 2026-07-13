@@ -19,20 +19,7 @@ export default function CategoriesTable({ categories, selectedCategoryId, onSele
 return(<div className="bg-white rounded-lg border flex flex-col">
           
           {/* Toolbar */}
-          <div className="p-4 border-b flex justify-between items-center gap-4">
-            <div className="flex flex-1 gap-3">
-              <div className="relative flex-1 max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input 
-                  type="text" 
-                  placeholder="Search exam name or ID..." 
-                  className="w-full pl-9 pr-4 py-2 text-sm border rounded-md outline-none focus:ring-1 focus:ring-blue-500"
-                />
-              </div>
-              <button className="flex items-center gap-2 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                <Filter className="w-4 h-4" /> Filters
-              </button>
-            </div>
+          <div className="p-4 border-b flex flex-col md:flex-row md:justify-between md:items-center gap-4">
           </div>
 
           {/* Table */}
@@ -40,10 +27,10 @@ return(<div className="bg-white rounded-lg border flex flex-col">
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-gray-500 border-b bg-gray-50/50">
                 <tr>
-                  <th className="px-6 py-4 w-12"><input type="checkbox" className="rounded border-gray-300" /></th>
+                  <th className="hidden md:table-cell px-6 py-4 w-12"><input type="checkbox" className="rounded border-gray-300" /></th>
                   <th className="px-6 py-4 font-semibold">Category Name</th>
                   <th className="px-6 py-4 font-semibold">Slug</th>
-                  <th className="px-6 py-4 font-semibold text-center">Description</th>
+                  <th className="hidden md:table-cell px-6 py-4 font-semibold text-center">Description</th>
     
                   <th className="px-6 py-4 font-semibold text-right">Actions</th>
                 </tr>
@@ -57,27 +44,30 @@ return(<div className="bg-white rounded-lg border flex flex-col">
                       onClick={() => onSelectCategory(category.id)}
                       className={`cursor-pointer ${isActive ? "bg-blue-50/50 border-l-2 border-l-primary" : "hover:bg-gray-50/50"}`}
                     >
-                      <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+                      <td className="hidden md:table-cell px-6 py-4" onClick={(e) => e.stopPropagation()}>
                         <input type="checkbox" className="rounded border-gray-300" />
                       </td>
                       <td className="px-6 py-4">
-                        <Link href={`/admin/categories/${category.id}`} className="hover:text-primary transition-colors">
+                        <div className="hover:text-primary transition-colors">
                           <p className="font-semibold text-gray-900">{category.name}</p>
                           <p className="text-xs text-gray-500">{category.id}</p>
-                        </Link>
+                        </div>
                       </td>
                       <td className="px-6 py-4">
   <span className="font-medium">{category.slug}</span>
 </td>
 
-<td className="px-6 py-4">
+<td className="hidden md:table-cell px-6 py-4">
   <span className="text-gray-600">
     {category.description}
   </span>
 </td>
                       <td className="px-6 py-4 text-right text-gray-400">
                         <div className="flex items-center justify-end gap-3">
-                          <Link href={`/admin/categories/${category.id}`} className="hover:text-primary transition-colors">
+                          <Link
+  href={`/admin/categories/${category.id}`}
+  className="hidden md:block hover:text-primary transition-colors"
+>
                             <Eye className="w-4 h-4" />
                           </Link>
                          <button
@@ -85,7 +75,7 @@ return(<div className="bg-white rounded-lg border flex flex-col">
     e.stopPropagation();
     onEdit(category);
   }}
-  className="hover:text-primary transition-colors"
+  className="hidden md:block hover:text-gray-600 transition-colors"
 >
   <Edit2 className="w-4 h-4" />
 </button>
@@ -109,7 +99,7 @@ return(<div className="bg-white rounded-lg border flex flex-col">
           </div>
 
           {/* Pagination */}
-          <div className="p-4 border-t flex justify-between items-center text-sm text-gray-500 bg-gray-50/30">
+          <div className="p-4 border-t flex flex-col sm:flex-row gap-4 sm:justify-between sm:items-center text-sm text-gray-500 bg-gray-50/30">
             <p>Showing <span className="font-medium text-gray-900">1-{categories.length}</span> of <span className="font-medium text-gray-900">{categories.length}</span> categories</p>
             <div className="flex gap-1">
               <button className="w-8 h-8 flex items-center justify-center border rounded hover:bg-gray-50"><ChevronLeft className="w-4 h-4" /></button>

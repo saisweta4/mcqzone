@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 
 import { type ExamCategory } from "@/types/exam";
+import Image from "next/image";
+import { UserButton } from "@clerk/nextjs";
 
 interface SidebarProps {
   examCategories: ExamCategory[];
@@ -47,17 +49,14 @@ const [categoryExams, setCategoryExams] = useState<Record<number, any[]>>({});
     <aside className="w-[280px] bg-white flex flex-col h-full border-r">
       
       {/* Header / Logo Section */}
-      <div className="pt-8 pb-6 px-6 shrink-0">
-        <div className="flex items-center gap-3 mb-1">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-sm">
-            <GraduationCap className="h-6 w-6" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-gray-900 leading-tight">MCQZone</h1>
-            <p className="text-[10px] font-bold text-gray-400 tracking-wider">MAIN MENU</p>
-          </div>
+      <div className="shrink-0">
+       <Image
+              src="/images/logo_name.png"
+              alt="Logo"
+              width={200}
+              height={200}
+            />
         </div>
-      </div>
 
       {/* Navigation Links - Scrollable Area */}
       <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto pb-4">
@@ -141,17 +140,17 @@ const [categoryExams, setCategoryExams] = useState<Record<number, any[]>>({});
 
       {/* User Profile Card - Fixed at bottom */}
       <div className="p-4 shrink-0 border-t">
-        <div className="bg-indigo-600 text-white rounded-xl p-3 flex items-center gap-3 shadow-sm cursor-pointer hover:bg-indigo-700 transition-colors">
-          <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center overflow-hidden shrink-0 border-2 border-white/20">
-            <img src="/user-avatar.png" alt="User" className="h-full w-full object-cover" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-sm font-bold truncate">Sai Sweetu Dsa</div>
-            <div className="text-[10px] text-indigo-100 uppercase tracking-wider truncate">OPSC Aspirant</div>
-          </div>
-          <ChevronUp className="h-4 w-4 text-indigo-100 shrink-0" />
-        </div>
+  <div className="bg-primary text-white rounded-xl p-3 flex items-center justify-between shadow-sm">
+    <div>
+      <div className="text-sm font-bold">My Account</div>
+      <div className="text-[10px] text-indigo-100 uppercase tracking-wider">
+        Manage Profile
       </div>
+    </div>
+
+    <UserButton  />
+  </div>
+</div>
 
     </aside>
   );

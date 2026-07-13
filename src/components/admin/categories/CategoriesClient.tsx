@@ -78,18 +78,22 @@ async function handleDelete(category: Category) {
 />
 
         {/* Filters and Table Container */}
-        <CategoriesTable
-  categories={categories}
-  selectedCategoryId={selectedCategoryId}
-  onSelectCategory={setSelectedCategoryId}
-   onEdit={setEditingCategory}
-   onDelete={handleDelete}
-/>
+         <div className="overflow-x-auto">
+      <CategoriesTable
+        categories={categories}
+        selectedCategoryId={selectedCategoryId}
+        onSelectCategory={setSelectedCategoryId}
+        onEdit={setEditingCategory}
+        onDelete={handleDelete}
+      />
+    </div>
         
       </div>
 
       {/* Right Sidebar: Quick Preview */}
-      <CategoryPreview category={selectedCategory} />
+      <div className="hidden md:block md:w-80 shrink-0">
+    <CategoryPreview category={selectedCategory} />
+  </div>
 
      <CreateCategoryModal
   open={openCreateModal || !!editingCategory}
