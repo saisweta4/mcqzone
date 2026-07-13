@@ -13,8 +13,10 @@ services:
       - "${POSTGRES_PORT}:5432"
 
     volumes:
-    # without this if the container stops then all the data will be lost. So we need to mount a volume to persist the data.
+      # Persist PostgreSQL data
       - postgres_data:/var/lib/postgresql/data
+
+      # Execute SQL files on first database creation
       - ./init:/docker-entrypoint-initdb.d
 
 volumes:

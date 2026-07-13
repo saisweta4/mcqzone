@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ExamToolbar from "@/components/admin/exams/ExamToolbar";
 import type { Exam } from "@/components/admin/exams/types";
@@ -8,90 +8,96 @@ import ExamPreview from "@/components/admin/exams/ExamPreview";
 import ExamsTable from "@/components/admin/exams/ExamsTable";
 import CreateExamModal from "@/components/admin/exams/CreateExamModel";
 
-// --- Types and Mock Data ---
 type Props = {
   initialExams: Exam[];
 };
 
-export default function ExamsClient({
-  initialExams,
-}: Props) {
-  const [exams, setExams] = useState(initialExams);
-  
+export default function ExamsClient({ initialExams }: Props) {
+  const [exams, setExams] = useState<Exam[]>(initialExams);
 
-const [selectedExamId, setSelectedExamId] = useState<number>(
-  initialExams[0]?.id ?? 0
-);
-const [editingExam, setEditingExam] = useState<Exam | undefined>();
+  const [selectedExamId, setSelectedExamId] = useState<number>(
+    initialExams[0]?.id ?? 0
+  );
+
+  const [editingExam, setEditingExam] = useState<Exam | undefined>();
+
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  // Always calculate selected exam safely
   const selectedExam =
-  exams.find((e) => e.id === selectedExamId) ?? exams[0];
+    exams.find((e) => e.id === selectedExamId) ?? null;
 
-  
+  // Keep selection valid whenever exams change
+  useEffect(() => {
+    if (exams.length === 0) {
+      setSelectedExamId(0);
+      return;
+    }
+
+    const exists = exams.some((e) => e.id === selectedExamId);
+
+    if (!exists) {
+      setSelectedExamId(exams[0].id);
+    }
+  }, [exams, selectedExamId]);
 
   async function refreshExams() {
-  const res = await fetch("/api/exams");
-  const json = await res.json();
+    const res = await fetch("/api/exams");
 
-  setExams(json.data);
-}
+    const json = await res.json();
 
-async function handleDelete(id: number) {
-  if (!confirm("Delete this exam?")) return;
+    setExams(json.data);
+  }
 
-  await fetch("/api/exams", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id }),
-  });
+  async function handleDelete(id: number) {
+    if (!confirm("Delete this exam?")) return;
 
-  refreshExams();
-}
+    await fetch("/api/exams", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
 
-const [openCreateModal, setOpenCreateModal] = useState(false);
+    await refreshExams();
+  }
 
   return (
     <div className="max-w-7xl mx-auto flex gap-6">
-      
-      {/* Left Column: Table & Management */}
+      {/* Left */}
       <div className="flex-1 space-y-6">
-        
-        {/* Header Section */}
-        
+        <ExamToolbar
+          onCreate={() => {
+            setEditingExam(undefined);
+            setOpenCreateModal(true);
+          }}
+        />
 
-<ExamToolbar
-  onCreate={() => setOpenCreateModal(true)}
-/>
-
-        {/* Filters and Table Container */}
         <ExamsTable
-  exams={exams}
-  selectedExamId={selectedExamId}
-  onSelectExam={setSelectedExamId}
-  onEdit={(exam) => {
-  setEditingExam(exam);
-  setOpenCreateModal(true);
-  
-}}
-onDelete={handleDelete}
-/>
-        
+          exams={exams}
+          selectedExamId={selectedExamId}
+          onSelectExam={setSelectedExamId}
+          onEdit={(exam) => {
+            setEditingExam(exam);
+            setOpenCreateModal(true);
+          }}
+          onDelete={handleDelete}
+        />
       </div>
 
-      {/* Right Sidebar: Quick Preview */}
-      <ExamPreview exam={selectedExam} />
+      {/* Right */}
+      {selectedExam && <ExamPreview exam={selectedExam} />}
 
-     <CreateExamModal
-    open={openCreateModal}
-    exam={editingExam}
-    onClose={()=>{
-        setOpenCreateModal(false);
-        setEditingExam(undefined);
-    }}
-    onSuccess={refreshExams}
-/>
-      
+      <CreateExamModal
+        open={openCreateModal}
+        exam={editingExam}
+        onClose={() => {
+          setOpenCreateModal(false);
+          setEditingExam(undefined);
+        }}
+        onSuccess={refreshExams}
+      />
     </div>
   );
 }

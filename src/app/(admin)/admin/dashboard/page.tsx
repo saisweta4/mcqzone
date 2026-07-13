@@ -1,18 +1,12 @@
-"use client";
-
 import { Users, BookOpen, Layers, HelpCircle, Plus, Calendar, ArrowUpRight, ArrowDownRight, MoreHorizontal, CheckCircle2, AlertCircle, UserPlus, MailCheck } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import DashboardChart from "@/components/admin/DashboardChart";
+import { getDashboardStats } from "@/lib/db/repositories/dashboard.repository";
+import { title } from "process";
 
-const chartData = [
-  { name: 'Jan', value: 1200 },
-  { name: 'Feb', value: 1800 },
-  { name: 'Mar', value: 2400 },
-  { name: 'Apr', value: 2100 },
-  { name: 'May', value: 3200 },
-  { name: 'Jun', value: 4500 },
-];
+export default async function Dashboard() {
+  const stats = await getDashboardStats();
 
-export default function Dashboard() {
+  console.log(stats);
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       
@@ -35,30 +29,82 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-4 gap-4">
-        {[
-          { title: "TOTAL USERS", value: "12,450", trend: "+12.5%", isUp: true, icon: Users, color: "text-primary", bg: "bg-blue-50" },
-          { title: "TOTAL EXAMS", value: "48", trend: "+4.2%", isUp: true, icon: BookOpen, color: "text-primary", bg: "bg-blue-50" },
-          { title: "TOTAL SUBJECTS", value: "156", trend: "+2.1%", isUp: true, icon: Layers, color: "text-primary", bg: "bg-blue-50" },
-          { title: "TOTAL QUESTIONS", value: "8,920", trend: "-0.5%", isUp: false, icon: HelpCircle, color: "text-primary", bg: "bg-blue-50" },
-        ].map((stat, i) => (
-          <div key={i} className="bg-white p-5 rounded-lg border flex flex-col justify-between h-32">
-            <div className="flex justify-between items-start">
-              <div className={`p-2 rounded-md ${stat.bg}`}>
-                <stat.icon className={`w-5 h-5 ${stat.color}`} />
-              </div>
-              <div className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${stat.isUp ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-                {stat.isUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-                {stat.trend}
-              </div>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 font-semibold mb-1">{stat.title}</p>
-              <h3 className="text-2xl font-bold text-gray-900">{stat.value}</h3>
-            </div>
-          </div>
-        ))}
+<div className="grid grid-cols-4 gap-4">
+  {[
+    {
+      title: "TOTAL USERS",
+      value: stats.users.toLocaleString(),
+      trend: "+12.5%",
+      isUp: true,
+      icon: Users,
+      color: "text-primary",
+      bg: "bg-blue-50",
+    },
+    {
+      title: "TOTAL EXAMS",
+      value: stats.exams.toLocaleString(),
+      trend: "+4.2%",
+      isUp: true,
+      icon: BookOpen,
+      color: "text-primary",
+      bg: "bg-blue-50",
+    },
+    {
+      title: "TOTAL SUBJECTS",
+      value: stats.subjects.toLocaleString(),
+      trend: "+2.1%",
+      isUp: true,
+      icon: Layers,
+      color: "text-primary",
+      bg: "bg-blue-50",
+    },
+    {
+      title: "TOTAL QUESTIONS",
+      value: stats.questions.toLocaleString(),
+      trend: "-0.5%",
+      isUp: false,
+      icon: HelpCircle,
+      color: "text-primary",
+      bg: "bg-blue-50",
+    },
+  ].map((stat, i) => (
+    <div
+      key={i}
+      className="bg-white p-5 rounded-lg border flex flex-col justify-between h-32"
+    >
+      <div className="flex justify-between items-start">
+        <div className={`p-2 rounded-md ${stat.bg}`}>
+          <stat.icon className={`w-5 h-5 ${stat.color}`} />
+        </div>
+
+        <div
+          className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${
+            stat.isUp
+              ? "bg-green-50 text-green-700"
+              : "bg-red-50 text-red-700"
+          }`}
+        >
+          {stat.isUp ? (
+            <ArrowUpRight className="w-3 h-3" />
+          ) : (
+            <ArrowDownRight className="w-3 h-3" />
+          )}
+          {stat.trend}
+        </div>
       </div>
+
+      <div>
+        <p className="text-xs text-gray-500 font-semibold mb-1">
+          {stat.title}
+        </p>
+
+        <h3 className="text-2xl font-bold text-gray-900">
+          {stat.value}
+        </h3>
+      </div>
+    </div>
+  ))}
+</div>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-3 gap-6">
@@ -73,17 +119,7 @@ export default function Dashboard() {
             <button className="text-gray-400 hover:text-gray-600"><MoreHorizontal className="w-5 h-5" /></button>
           </div>
           
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6B7280' }} />
-                <Tooltip cursor={{fill: 'transparent'}} />
-                <Bar dataKey="value" fill="#3B82F6" radius={[4, 4, 0, 0]} barSize={32} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <DashboardChart />
 
           <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t text-center">
             <div>

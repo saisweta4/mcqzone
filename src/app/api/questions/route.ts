@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import { createQuestion, getAllQuestions } from "@/lib/db/repositories/question.repository";
+import { requireAdminApi } from "@/lib/api";
 
 export async function GET() {
+  const auth = await requireAdminApi();
+
+  if ("error" in auth) {
+    return auth.error;
+  }
   try {
     const questions = await getAllQuestions();
 
