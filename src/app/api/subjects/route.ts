@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
+import { requireAdminApi } from "@/lib/api";
+
 import {createSubject,
   updateSubject,
   deleteSubject, } from "@/lib/db/repositories/subject.repository";
 
   export async function POST(request: Request) {
-  try {
+  
+  const auth = await requireAdminApi();
+  
+  if ("error" in auth) {
+    return auth.error;
+  }
+    try {
     const body = await request.json();
 
     const subject = await createSubject(body);

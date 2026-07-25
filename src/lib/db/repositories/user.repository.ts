@@ -88,3 +88,22 @@ export async function deleteUser(clerkId: string) {
     [clerkId]
   );
 }
+
+
+export async function getAllUsers() {
+  const result = await pool.query(`
+    SELECT
+      id,
+      clerk_id,
+      email,
+      first_name,
+      last_name,
+      image_url,
+      role,
+      created_at
+    FROM users
+    ORDER BY created_at DESC;
+  `);
+
+  return result.rows;
+}
