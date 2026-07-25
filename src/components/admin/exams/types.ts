@@ -1,5 +1,6 @@
 export interface Exam {
   id: number;
+  category_id: number;
   category_name: string;
 
   title: string;
