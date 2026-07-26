@@ -5,7 +5,7 @@ export function EmptyState() {
   return (
     <div className="flex flex-col items-center justify-center h-full max-w-2xl mx-auto px-4">
       <div className="w-16 h-16 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6 relative">
-        <Sparkles className="w-8 h-8 text-indigo-600" />
+        <Sparkles className="w-8 h-8 text-primary" />
         <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
       </div>
       

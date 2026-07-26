@@ -6,6 +6,7 @@ import {
   ChevronLeft, HelpCircle, Bookmark, AlertTriangle, 
   CheckCircle2, BookOpen, Sparkles, ChevronRight, XCircle
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface QuizOption {
   id: number;
@@ -69,10 +70,10 @@ export function QuizClient({ questions,examId, examName, subjectName }: QuizClie
       if (result.success) {
         setAttemptId(result.data.id);
       } else {
-        console.error(result.message);
+        toast.error(result.message);
       }
     } catch (error) {
-      console.error("Failed to create attempt:", error);
+      toast.error("Failed to create quiz attempt.");
     }
   }
 

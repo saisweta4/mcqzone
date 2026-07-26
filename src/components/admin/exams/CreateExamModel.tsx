@@ -3,6 +3,8 @@
 import { useState,useEffect } from "react";
 import type {Category} from "../categories/types";
 import { Exam } from "./types";
+import { toast } from "react-hot-toast";
+import LoadingButton from "@/components/ui/LoadingButton";
 
 type Props = {
   open: boolean;
@@ -25,6 +27,7 @@ const [description, setDescription] = useState(exam?.description ?? "");
 const [duration, setDuration] = useState(exam?.duration ?? 0);
 const [totalQuestions, setTotalQuestions] = useState(exam?.total_questions ?? 0);
 const [difficulty, setDifficulty] = useState(exam?.difficulty ?? "Easy");
+const [loading, setLoading] = useState(false);
 
 useEffect(() => {
   fetch("/api/categories")
@@ -55,32 +58,59 @@ useEffect(() => {
 
   if (!open) return null;
 
-  async function handleSubmit() {
-    const res = await fetch("/api/exams", {
-  method: exam ? "PUT" : "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    id:exam?.id,
-    categoryId,
-    title,
-    slug,
-    description,
-    duration,
-    totalQuestions,
-    difficulty,
-  }),
-});
+async function handleSubmit() {
+  setLoading(true);
 
+  const toastId = toast.loading(
+    exam ? "Updating exam..." : "Creating exam..."
+  );
+
+  try {
+    const res = await fetch("/api/exams", {
+      method: exam ? "PUT" : "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: exam?.id,
+        categoryId: categoryId,
+        title,
+        slug,
+        description,
+        duration,
+        totalQuestions: totalQuestions,
+        difficulty,
+      }),
+    });
 
     const json = await res.json();
 
-if (res.ok) {
-  onSuccess(json.data);
-  onClose();
-}
+    if (!res.ok) {
+      toast.error(json.message || "Something went wrong.", {
+        id: toastId,
+      });
+      return;
+    }
+
+    toast.success(
+      exam
+        ? "Exam updated successfully!"
+        : "Exam created successfully!",
+      {
+        id: toastId,
+      }
+    );
+
+    onSuccess(json.data);
+    onClose();
+  } catch {
+    toast.error("Network error.", {
+      id: toastId,
+    });
+  } finally {
+    setLoading(false);
   }
+}
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
@@ -151,12 +181,14 @@ onChange={(e) => setTitle(e.target.value)}
         <div className="flex justify-end gap-3">
           <button onClick={onClose}>Cancel</button>
 
-          <button
-            onClick={handleSubmit}
-            className="bg-primary text-white px-4 py-2 rounded"
-          >
-            {exam ? "Update" : "Create"}
-          </button>
+          <LoadingButton
+  loading={loading}
+  onClick={handleSubmit}
+  className="bg-primary text-white px-4 py-2 rounded"
+>
+  {exam ? "Update Exam" : "Create Exam"}
+</LoadingButton>
+
         </div>
       </div>
     </div>

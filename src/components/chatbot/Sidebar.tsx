@@ -5,14 +5,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 export function Sidebar() {
   return (
     <div className="flex flex-col h-full p-4">
-      <div className="flex items-center gap-2 mb-6 text-indigo-600 font-bold text-xl">
-        <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center">
+      <div className="flex items-center gap-2 mb-6 text-primary font-bold text-xl">
+        <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
           <div className="w-3 h-3 bg-white mask mask-heart" />
         </div>
         MCQZone
       </div>
 
-      <Button className="w-full justify-start gap-2 bg-indigo-600 hover:bg-indigo-700 text-white mb-6">
+      <Button className="w-full justify-start gap-2 bg-primary hover:bg-indigo-700 text-white mb-6">
         <Plus className="w-4 h-4" /> New Chat
       </Button>
 

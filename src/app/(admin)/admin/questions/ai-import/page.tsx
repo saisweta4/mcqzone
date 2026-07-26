@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-
+import toast from "react-hot-toast";
 type AIQuestion = {
   questionText: string;
   options: string[];
@@ -50,7 +50,7 @@ export default function AIBulkImportPage() {
 
     updateQuestion(index, "explanation", data.explanation.detailed);
   } catch (error) {
-    alert("Failed to generate explanation.");
+    toast.error("Failed to generate explanation.");
   } finally {
     setGeneratingIndex(null);
   }
@@ -89,7 +89,7 @@ export default function AIBulkImportPage() {
     setFormattedQuestions(data.data);
     
   } else {
-    alert(data.message);
+    toast.error(data.message);
   }
 };
 
@@ -108,10 +108,10 @@ const handleImport = async () => {
   const data = await res.json();
 
   if (data.success) {
-    alert("Questions imported successfully.");
+    toast.success("Questions imported successfully.");
     router.push("/admin/questions");
   } else {
-    alert(data.message);
+    toast.error(data.message);
   }
 };
 

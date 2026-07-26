@@ -21,15 +21,6 @@ export default function QuestionTable({
       {/* Toolbar */}
 
       <div className="p-4 border-b flex justify-between items-center bg-gray-50/50 rounded-t-xl">
-        <div className="relative w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-
-          <input
-            type="text"
-            placeholder="Search question"
-            className="w-full pl-9 pr-4 py-2 text-sm border rounded-md outline-none"
-          />
-        </div>
       </div>
 
       {/* Table */}
@@ -38,54 +29,62 @@ export default function QuestionTable({
         <table className="w-full text-sm">
 
           <thead className="text-xs uppercase border-b bg-white text-gray-500">
-            <tr>
-              <th className="px-4 py-4">Code</th>
-              <th className="px-4 py-4">Question</th>
-              <th className="px-4 py-4">Difficulty</th>
-              <th className="px-4 py-4">Marks</th>
-              <th className="px-4 py-4">Preview</th>
-            </tr>
-          </thead>
+  <tr>
+    <th className="px-4 py-4">Code</th>
+
+    <th className="px-4 py-4">
+      Question
+    </th>
+
+    <th className="hidden lg:table-cell px-4 py-4">
+      Difficulty
+    </th>
+
+    <th className="hidden lg:table-cell px-4 py-4">
+      Marks
+    </th>
+
+    <th className="px-4 py-4 text-center">
+      Preview
+    </th>
+  </tr>
+</thead>
 
           <tbody>
 
             {questions.map((q) => (
 
               <tr
-                key={q.id}
-                onClick={() => setActiveQuestionId(q.id)}
-                className={`cursor-pointer border-b hover:bg-gray-50 ${
-                  activeQuestionId === q.id
-                    ? "bg-blue-50"
-                    : ""
-                }`}
-              >
+  key={q.id}
+  onClick={() => setActiveQuestionId(q.id)}
+  className={`cursor-pointer border-b hover:bg-gray-50 ${
+    activeQuestionId === q.id ? "bg-blue-50" : ""
+  }`}
+>
+  <td className="px-4 py-4 font-medium">
+    {q.id}
+  </td>
 
-                <td className="px-4 py-4 font-medium">
-                  {q.id}
-                </td>
+  <td className="px-4 py-4 max-w-xl">
+    <div className="font-semibold line-clamp-2">
+      {q.questionText}
+    </div>
+  </td>
 
-                <td className="px-4 py-4 max-w-xl">
-                  <div className="font-semibold line-clamp-2">
-                    {q.questionText}
-                  </div>
-                </td>
+  <td className="hidden lg:table-cell px-4 py-4">
+    {q.difficulty}
+  </td>
 
-                <td className="px-4 py-4">
-                  {q.difficulty}
-                </td>
+  <td className="hidden lg:table-cell px-4 py-4">
+    {q.marks}
+  </td>
 
-                <td className="px-4 py-4">
-                  
-                </td>
-
-                <td className="px-4 py-4">
-                  <Link href={`/admin/questions/${q.id}`}>
-                    <Eye className="w-5 h-5 text-primary" />
-                  </Link>
-                </td>
-
-              </tr>
+  <td className="px-4 py-4 text-center">
+    <Link href={`/admin/questions/${q.id}`}>
+      <Eye className="w-5 h-5 text-primary mx-auto" />
+    </Link>
+  </td>
+</tr>
 
             ))}
 

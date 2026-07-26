@@ -1,26 +1,32 @@
+"use client"
+import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+
 export function HowItWorks() {
-  const steps = [
-    {
-      step: "01",
-      title: "Choose Your Exam",
-      desc: "Select from OPSC, OSSC, OSSSC, or specialized departmental exams."
-    },
-    {
-      step: "02",
-      title: "Practice Questions",
-      desc: "Go through topic-wise questions at your own pace with detailed solutions."
-    },
-    {
-      step: "03",
-      title: "Take Mock Quizzes",
-      desc: "Simulate the actual exam environment with timed, full-length mock tests."
-    },
-    {
-      step: "04",
-      title: "Improve with AI",
-      desc: "Review incorrect answers with personalized AI tutoring and close your gaps."
-    }
-  ];
+  const router = useRouter();
+const { isSignedIn } = useUser();
+const steps = [
+  {
+    step: "01",
+    title: "Choose Your Government Exam",
+    desc: "Select your target exam like OPSC, OSSC, OSSSC, Odisha Police, RI, ARI, Amin, and other Odisha government recruitment exams."
+  },
+  {
+    step: "02",
+    title: "Practice Exam-Wise Questions",
+    desc: "Solve carefully curated MCQs with detailed explanations to strengthen your concepts and improve accuracy."
+  },
+  {
+    step: "03",
+    title: "Track Your Learning Progress",
+    desc: "Organize your preparation by exploring subjects, topics, and questions while building confidence for competitive exams."
+  },
+  {
+    step: "04",
+    title: "Learn with AI Explanations",
+    desc: "Understand every answer using AI-powered explanations that simplify difficult concepts and help you avoid repeating mistakes."
+  }
+];
 
   return (
     <section className="section-spacing bg-white">
@@ -45,9 +51,14 @@ export function HowItWorks() {
         </div>
         
         <div className="mt-16 text-center">
-          <button className="primary-button-gradient rounded-full px-8 py-4 text-white font-semibold shadow-lg hover:shadow-xl transition-all">
-            Start Your Free Journey
-          </button>
+          <button
+  onClick={() =>
+    router.push(isSignedIn ? "/exams" : "/sign-in")
+  }
+  className="primary-button-gradient rounded-full px-8 py-4 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+>
+  Start Your Free Journey
+</button>
         </div>
       </div>
     </section>

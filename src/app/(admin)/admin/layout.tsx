@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
 import Sidebar from "@/components/admin/Sidebar";
-import Header from "@/components/admin/Header";
 
 import { getCurrentUser } from "@/lib/auth";
 
@@ -10,6 +9,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   const user = await getCurrentUser();
 
   // Not logged in
@@ -39,8 +39,7 @@ export default async function AdminLayout({
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
 
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <Header />
+      <div className="flex flex-1 flex-col min-w-0">
 
         <main className="flex-1 overflow-y-auto p-6">
           {children}

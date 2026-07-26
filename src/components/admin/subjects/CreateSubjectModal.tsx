@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { Subject } from "./types";
+import { toast } from "react-hot-toast";
+import LoadingButton from "@/components/ui/LoadingButton";
 
 type Props = {
   open: boolean;
@@ -21,6 +23,7 @@ export default function CreateSubjectModal({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [displayOrder, setDisplayOrder] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!subject) {
@@ -38,6 +41,13 @@ export default function CreateSubjectModal({
   if (!open) return null;
 
   async function handleSubmit() {
+     setLoading(true);
+
+  const toastId = toast.loading(
+    subject ? "Updating subject..." : "Creating subject..."
+  );
+
+  try{
     const res = await fetch("/api/subjects", {
       method: subject ? "PUT" : "POST",
       headers: {
@@ -52,11 +62,34 @@ export default function CreateSubjectModal({
       }),
     });
 
-    if (res.ok) {
-      onSuccess();
-      onClose();
+    const json = await res.json();
+
+    if (!res.ok) {
+      toast.error(json.message || "Something went wrong.", {
+        id: toastId,
+      });
+      return;
     }
+
+    toast.success(
+      subject
+        ? "Subject updated successfully!"
+        : "Subject created successfully!",
+      {
+        id: toastId,
+      }
+    );
+
+    onSuccess();
+    onClose();
+  } catch {
+    toast.error("Network error.", {
+      id: toastId,
+    });
+  } finally {
+    setLoading(false);
   }
+}
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
@@ -93,12 +126,13 @@ export default function CreateSubjectModal({
             Cancel
           </button>
 
-          <button
+          <LoadingButton
+            loading={loading}
             onClick={handleSubmit}
             className="bg-primary text-white px-4 py-2 rounded"
           >
             {subject ? "Update" : "Create"}
-          </button>
+          </LoadingButton>
         </div>
 
       </div>

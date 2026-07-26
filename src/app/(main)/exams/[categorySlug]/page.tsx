@@ -67,10 +67,7 @@ const exams = await getExamsByCategorySlug(categorySlug);
             </Link>
             <h1 className="text-sm md:text-base font-bold text-gray-900 truncate max-w-[150px] sm:max-w-xs">{category.name}</h1>
           </div>
-          <div className="flex items-center gap-3 md:gap-4 text-gray-500">
-            <button className="hover:text-gray-900"><Search className="h-5 w-5" /></button>
-            <button className="hover:text-gray-900"><Bell className="h-5 w-5" /></button>
-          </div>
+          
         </header>
 
         {/* Scrollable Content */}

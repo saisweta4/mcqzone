@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Category } from "./types";
+import LoadingButton from "@/components/ui/LoadingButton";
+import { toast } from "react-hot-toast";
 
 type Props = {
   open: boolean;
@@ -19,30 +21,56 @@ export default function CreateCategoryModal({
   const [name, setName] = useState(category?.name ?? "");
 const [slug, setSlug] = useState(category?.slug ?? "");
 const [description, setDescription] = useState(category?.description ?? "");
+const [loading, setLoading] = useState(false);
 
   if (!open) return null;
 
-  async function handleSubmit() {
+ async function handleSubmit() {
+  setLoading(true);
+
+  const toastId = toast.loading(
+    category ? "Updating category..." : "Creating category..."
+  );
+
+  try {
     const res = await fetch("/api/categories", {
-  method: category ? "PUT" : "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    id: category?.id,
-    name,
-    slug,
-    description,
-  }),
-});
+      method: category ? "PUT" : "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: category?.id,
+        name,
+        slug,
+        description,
+      }),
+    });
 
     const json = await res.json();
 
-if (res.ok) {
-  onSuccess(json.data);
-  onClose();
-}
+    if (res.ok) {
+      toast.success(
+        category
+          ? "Category updated successfully!"
+          : "Category created successfully!",
+        { id: toastId }
+      );
+
+      onSuccess(json.data);
+      onClose();
+    } else {
+      toast.error(json.message || "Something went wrong.", {
+        id: toastId,
+      });
+    }
+  } catch {
+    toast.error("Network error.", {
+      id: toastId,
+    });
+  } finally {
+    setLoading(false);
   }
+}
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
@@ -73,12 +101,14 @@ if (res.ok) {
         <div className="flex justify-end gap-3">
           <button onClick={onClose}>Cancel</button>
 
-          <button
-            onClick={handleSubmit}
-            className="bg-primary text-white px-4 py-2 rounded"
-          >
-            Create
-          </button>
+          <LoadingButton
+  loading={loading}
+  onClick={handleSubmit}
+  className="bg-primary text-white px-4 py-2 rounded"
+>
+  {category ? "Update" : "Create"}
+</LoadingButton>
+
         </div>
       </div>
     </div>

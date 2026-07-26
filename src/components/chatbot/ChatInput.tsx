@@ -51,7 +51,7 @@ export function ChatInput({
           size="icon"
           disabled={disabled}
           onClick={handleSend}
-          className="bg-indigo-600 hover:bg-indigo-700 rounded-xl rounded-bl-none h-10 w-10">
+          className="bg-primary hover:bg-indigo-700 rounded-xl rounded-bl-none h-10 w-10">
             <Send className="w-4 h-4 text-white" />
           </Button>
         </div>

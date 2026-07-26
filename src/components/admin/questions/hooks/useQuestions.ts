@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export function useQuestions() {
   const [questions, setQuestions] = useState<any[]>([]);
@@ -21,7 +22,9 @@ export function useQuestions() {
           setActiveQuestionId(data.data[0].id);
         }
       })
-      .catch(console.error);
+      .catch(() => {
+  toast.error("Failed to load questions.");
+});
       fetch("/api/categories")
     .then((res) => res.json())
     .then((data) => {
@@ -40,7 +43,9 @@ export function useQuestions() {
       .then((data) => {
         setExams(data.data);
       })
-      .catch(console.error);
+     .catch(() => {
+  toast.error("Failed to load exams.");
+});
   }, [selectedCategory]);
   
   return {

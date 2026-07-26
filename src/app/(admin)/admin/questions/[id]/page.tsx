@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import QuestionForm from "@/components/admin/questions/QuestionForm";
 import type { QuizQuestion } from "@/components/admin/questions/types";
+import toast from "react-hot-toast";
 
 
 export default function EditQuestion() {
@@ -41,8 +42,8 @@ export default function EditQuestion() {
       if (data.success) {
         setQuestion(data.data);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : String(err));
     }
   }
 
@@ -54,36 +55,43 @@ export default function EditQuestion() {
 
   setSaving(true);
 
+  const toastId = toast.loading("Updating question...");
+
   try {
     const res = await fetch(`/api/questions/${question.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-     body: JSON.stringify({
-  questionText: question.questionText,
-  explanation: question.explanation.detailed,
-  difficulty: question.difficulty,
-  marks: question.marks,
-  negativeMarks: question.negativeMarks,
-  correctOptionId: Number(question.correctOptionId),
-  options: question.options.map((o) => ({
-    id: Number(o.id),
-    text: o.text,
-  })),
-}),
+      body: JSON.stringify({
+        questionText: question.questionText,
+        explanation: question.explanation.detailed,
+        difficulty: question.difficulty,
+        marks: question.marks,
+        negativeMarks: question.negativeMarks,
+        correctOptionId: Number(question.correctOptionId),
+        options: question.options.map((o) => ({
+          id: Number(o.id),
+          text: o.text,
+        })),
+      }),
     });
 
     const data = await res.json();
 
     if (data.success) {
-      alert("Question updated successfully.");
+      toast.success("Question updated successfully!", {
+        id: toastId,
+      });
     } else {
-      alert(data.message);
+      toast.error(data.message || "Failed to update question.", {
+        id: toastId,
+      });
     }
-  } catch (err) {
-    console.error(err);
-    alert("Unable to update question.");
+  } catch {
+    toast.error("Network error.", {
+      id: toastId,
+    });
   } finally {
     setSaving(false);
   }
@@ -94,6 +102,8 @@ const handleDelete = async () => {
 
   if (!ok) return;
 
+  const toastId = toast.loading("Deleting question...");
+
   try {
     const res = await fetch(`/api/questions/${question.id}`, {
       method: "DELETE",
@@ -102,13 +112,20 @@ const handleDelete = async () => {
     const data = await res.json();
 
     if (data.success) {
+      toast.success("Question deleted successfully!", {
+        id: toastId,
+      });
+
       router.push("/admin/questions");
     } else {
-      alert(data.message);
+      toast.error(data.message || "Failed to delete question.", {
+        id: toastId,
+      });
     }
-  } catch (err) {
-    console.error(err);
-    alert("Unable to delete question.");
+  } catch {
+    toast.error("Network error.", {
+      id: toastId,
+    });
   }
 };
 

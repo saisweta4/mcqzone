@@ -107,3 +107,20 @@ export async function getAllUsers() {
 
   return result.rows;
 }
+
+export async function updateUserRole(
+  id: number,
+  role: "USER" | "ADMIN"
+) {
+  const result = await pool.query(
+    `
+    UPDATE users
+    SET role = $2
+    WHERE id = $1
+    RETURNING *;
+    `,
+    [id, role]
+  );
+
+  return result.rows[0];
+}

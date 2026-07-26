@@ -23,7 +23,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     return (
       <div className="flex justify-end group">
         <div className="flex items-start gap-3 max-w-[85%] md:max-w-[75%]">
-          <div className="bg-indigo-600 text-white rounded-2xl rounded-tr-sm px-5 py-3.5 text-sm shadow-sm leading-relaxed whitespace-pre-wrap">
+          <div className="bg-primary text-white rounded-2xl rounded-tr-sm px-5 py-3.5 text-sm shadow-sm leading-relaxed whitespace-pre-wrap">
             {message.content}
           </div>
 
@@ -42,7 +42,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     <div className="flex justify-start group">
       <Avatar className="w-8 h-8 border bg-white mr-3 mt-1 shrink-0 shadow-sm">
         <AvatarImage src="/bot-avatar.png" />
-        <AvatarFallback className="bg-indigo-600 text-white text-xs font-semibold">
+        <AvatarFallback className="bg-primary text-white text-xs font-semibold">
           AI
         </AvatarFallback>
       </Avatar>

@@ -33,6 +33,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+   
+
     const exam = await createExam(body);
 
     return NextResponse.json({

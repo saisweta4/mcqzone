@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import QuestionForm from "@/components/admin/questions/QuestionForm";
 import type { QuizQuestion } from "@/components/admin/questions/types";
-
+import toast from "react-hot-toast";
 export default function NewQuestionPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
@@ -35,39 +35,53 @@ const subjectId = searchParams.get("subjectId");
   ],
 });
 
-  const handleCreate = async () => {
-    setSaving(true);
+ const handleCreate = async () => {
+  setSaving(true);
 
+  const toastId = toast.loading("Publishing question...");
+
+  try {
     const res = await fetch("/api/questions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-  question_code: `Q${Date.now()}`,
- subject_id: Number(subjectId),
-  question_text: question.questionText,
-  explanation: question.explanation.detailed,
-  difficulty: "Medium",
-  marks: 1,
-  negative_marks: 0.25,
-  options: question.options.map((o) => ({
-    text: o.text,
-    is_correct: o.id === question.correctOptionId,
-  })),
-}),
+        question_code: `Q${Date.now()}`,
+        subject_id: Number(subjectId),
+        question_text: question.questionText,
+        explanation: question.explanation.detailed,
+        difficulty: "Medium",
+        marks: 1,
+        negative_marks: 0.25,
+        options: question.options.map((o) => ({
+          text: o.text,
+          is_correct: o.id === question.correctOptionId,
+        })),
+      }),
     });
 
     const data = await res.json();
 
-    setSaving(false);
-
     if (data.success) {
+      toast.success("Question published successfully!", {
+        id: toastId,
+      });
+
       router.push(`/admin/questions/${data.data}`);
     } else {
-      alert(data.message);
+      toast.error(data.message || "Failed to publish question.", {
+        id: toastId,
+      });
     }
-  };
+  } catch {
+    toast.error("Network error.", {
+      id: toastId,
+    });
+  } finally {
+    setSaving(false);
+  }
+};
 
   return (
     <QuestionForm

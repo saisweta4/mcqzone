@@ -4,7 +4,6 @@ import ExamsClient from "./ExamsClient";
 export default async function ExamsPage() {
   const exams = await getAllExams();
 
-  console.log(exams);
 
   return (
     <ExamsClient

@@ -58,11 +58,6 @@ export default async function ExamPage({
 
           </div>
 
-          <div className="flex gap-4 text-gray-500">
-            <Search className="h-5 w-5" />
-            <Bell className="h-5 w-5" />
-          </div>
-
         </header>
 
         <main className="flex-1 p-8 space-y-8">

@@ -1,21 +1,24 @@
 export function WhyChooseUs() {
-  const features = [
-    {
-      title: "Large Question Bank",
-      description: "10,000+ topic-wise practice questions covering previous years.",
-      icon: "📚"
-    },
-    {
-      title: "AI Explanations",
-      description: "Get personalized AI reasoning to close your knowledge gaps.",
-      icon: "🤖"
-    },
-    {
-      title: "Performance Tracking",
-      description: "Detailed analytics to identify your weak areas and track progress.",
-      icon: "📈"
-    }
-  ];
+ const features = [
+  {
+    title: "Free Odisha Government Exam MCQs",
+    description:
+      "Practice hundreds of free exam-wise and subject-wise MCQs for OPSC, OSSC, OSSSC, Odisha Police, RI, ARI, Amin, and more.",
+    icon: "📚",
+  },
+  {
+    title: "AI-Powered Explanations",
+    description:
+      "Understand every answer with free AI-generated explanations designed to simplify concepts and improve your preparation.",
+    icon: "🤖",
+  },
+  {
+    title: "100% Free Learning Platform",
+    description:
+      "Prepare for Odisha Government Exams completely free with organized questions, detailed explanations, and a modern learning experience.",
+    icon: "🎯",
+  },
+];
 
   return (
     <section className="section-spacing bg-blue-50/50">

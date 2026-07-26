@@ -31,11 +31,8 @@ export default function QuestionFilters({
   setActiveQuestionId,
 }: Props) {
   return (
-    <div className="w-64 shrink-0 flex flex-col gap-6">
-      <div className="flex items-center gap-2 text-gray-900 font-bold mb-2">
-        <Filter className="w-4 h-4" />
-        Advanced Filters
-      </div>
+    <div className="w-full lg:w-64 shrink-0 flex flex-col gap-6">
+      
 
       <div className="space-y-6">
 

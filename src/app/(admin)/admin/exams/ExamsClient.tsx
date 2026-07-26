@@ -7,6 +7,7 @@ import type { Exam } from "@/components/admin/exams/types";
 import ExamPreview from "@/components/admin/exams/ExamPreview";
 import ExamsTable from "@/components/admin/exams/ExamsTable";
 import CreateExamModal from "@/components/admin/exams/CreateExamModel";
+import { toast } from "react-hot-toast/headless";
 
 type Props = {
   initialExams: Exam[];
@@ -23,11 +24,9 @@ export default function ExamsClient({ initialExams }: Props) {
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
 
-  // Always calculate selected exam safely
   const selectedExam =
     exams.find((e) => e.id === selectedExamId) ?? null;
 
-  // Keep selection valid whenever exams change
   useEffect(() => {
     if (exams.length === 0) {
       setSelectedExamId(0);
@@ -43,16 +42,19 @@ export default function ExamsClient({ initialExams }: Props) {
 
   async function refreshExams() {
     const res = await fetch("/api/exams");
-
     const json = await res.json();
-
     setExams(json.data);
   }
 
   async function handleDelete(id: number) {
-    if (!confirm("Delete this exam?")) return;
+  const confirmed = window.confirm("Delete this exam?");
 
-    await fetch("/api/exams", {
+  if (!confirmed) return;
+
+  const toastId = toast.loading("Deleting exam...");
+
+  try {
+    const res = await fetch("/api/exams", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -60,11 +62,27 @@ export default function ExamsClient({ initialExams }: Props) {
       body: JSON.stringify({ id }),
     });
 
+    if (!res.ok) {
+      toast.error("Failed to delete exam.", {
+        id: toastId,
+      });
+      return;
+    }
+
     await refreshExams();
+
+    toast.success("Exam deleted successfully!", {
+      id: toastId,
+    });
+  } catch {
+    toast.error("Something went wrong.", {
+      id: toastId,
+    });
   }
+}
 
   return (
-    <div className="max-w-7xl mx-auto flex gap-6">
+    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
       {/* Left */}
       <div className="flex-1 space-y-6">
         <ExamToolbar
@@ -74,20 +92,24 @@ export default function ExamsClient({ initialExams }: Props) {
           }}
         />
 
-        <ExamsTable
-          exams={exams}
-          selectedExamId={selectedExamId}
-          onSelectExam={setSelectedExamId}
-          onEdit={(exam) => {
-            setEditingExam(exam);
-            setOpenCreateModal(true);
-          }}
-          onDelete={handleDelete}
-        />
+        <div className="overflow-x-auto">
+          <ExamsTable
+            exams={exams}
+            selectedExamId={selectedExamId}
+            onSelectExam={setSelectedExamId}
+            onEdit={(exam) => {
+              setEditingExam(exam);
+              setOpenCreateModal(true);
+            }}
+            onDelete={handleDelete}
+          />
+        </div>
       </div>
 
-      {/* Right */}
-      {selectedExam && <ExamPreview exam={selectedExam} />}
+      {/* Preview - hidden on mobile */}
+      <div className="hidden md:block md:w-80 shrink-0">
+        {selectedExam && <ExamPreview exam={selectedExam} />}
+      </div>
 
       <CreateExamModal
         open={openCreateModal}

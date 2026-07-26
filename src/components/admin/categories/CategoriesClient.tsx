@@ -1,109 +1,125 @@
 "use client";
+
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 import CategoryToolbar from "@/components/admin/categories/CategoryToolbar";
 import CategoriesTable from "@/components/admin/categories/CategoriesTable";
 import CategoryPreview from "@/components/admin/categories/CategoryPreview";
-import type { Category } from "@/components/admin/categories/types";
 import CreateCategoryModal from "@/components/admin/categories/CreateCategoryModal";
+
+import type { Category } from "@/components/admin/categories/types";
+
 type Props = {
   initialCategories: Category[];
 };
-
 
 export default function CategoriesClient({
   initialCategories,
 }: Props) {
   const [categories, setCategories] = useState(initialCategories);
 
-const [selectedCategoryId, setSelectedCategoryId] = useState<number>(
-  initialCategories[0]?.id ?? 0
-);
-const [openCreateModal, setOpenCreateModal] = useState(false);
-const [editingCategory, setEditingCategory] = useState<Category | undefined>();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(
+    initialCategories[0]?.id ?? 0
+  );
+
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<Category>();
 
   const selectedCategory =
-  categories.find((c) => c.id === selectedCategoryId) ??
-  categories[0];
+    categories.find((c) => c.id === selectedCategoryId) ??
+    categories[0];
 
   function handleCategorySaved(category: Category) {
-  setCategories((prev) =>
-    prev.some((c) => c.id === category.id)
-      ? prev.map((c) => (c.id === category.id ? category : c))
-      : [...prev, category]
-  );
+    setCategories((prev) =>
+      prev.some((c) => c.id === category.id)
+        ? prev.map((c) => (c.id === category.id ? category : c))
+        : [...prev, category]
+    );
 
-  setSelectedCategoryId(category.id);
-}
-
-async function handleDelete(category: Category) {
-  const confirmed = window.confirm(
-    `Delete "${category.name}"?`
-  );
-
-  if (!confirmed) return;
-
-  const res = await fetch("/api/categories", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: category.id,
-    }),
-  });
-
-  if (!res.ok) {
-    alert("Failed to delete category");
-    return;
+    setSelectedCategoryId(category.id);
   }
 
-  const updated = categories.filter((c) => c.id !== category.id);
+  async function handleDelete(category: Category) {
+    const confirmed = window.confirm(
+      `Delete "${category.name}"?`
+    );
 
-  setCategories(updated);
+    if (!confirmed) return;
 
-  if (updated.length > 0) {
-    setSelectedCategoryId(updated[0].id);
+    const toastId = toast.loading("Deleting category...");
+
+    try {
+      const res = await fetch("/api/categories", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: category.id,
+        }),
+      });
+
+      if (!res.ok) {
+        toast.error("Failed to delete category", {
+          id: toastId,
+        });
+        return;
+      }
+
+      const updated = categories.filter(
+        (c) => c.id !== category.id
+      );
+
+      setCategories(updated);
+
+      if (updated.length > 0) {
+        setSelectedCategoryId(updated[0].id);
+      }
+
+      toast.success("Category deleted successfully!", {
+        id: toastId,
+      });
+    } catch {
+      toast.error("Something went wrong.", {
+        id: toastId,
+      });
+    }
   }
-}
 
   return (
-    <div className="max-w-7xl mx-auto flex gap-6">
-      
-      {/* Left Column: Table & Management */}
+    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
+      {/* Left Column */}
       <div className="flex-1 space-y-6">
-        
-        {/* Header Section */}
-       <CategoryToolbar
-  onCreate={() => setOpenCreateModal(true)}
-/>
+        <CategoryToolbar
+          onCreate={() => setOpenCreateModal(true)}
+        />
 
-        {/* Filters and Table Container */}
-        <CategoriesTable
-  categories={categories}
-  selectedCategoryId={selectedCategoryId}
-  onSelectCategory={setSelectedCategoryId}
-   onEdit={setEditingCategory}
-   onDelete={handleDelete}
-/>
-        
+        <div className="overflow-x-auto">
+          <CategoriesTable
+            categories={categories}
+            selectedCategoryId={selectedCategoryId}
+            onSelectCategory={setSelectedCategoryId}
+            onEdit={setEditingCategory}
+            onDelete={handleDelete}
+          />
+        </div>
       </div>
 
-      {/* Right Sidebar: Quick Preview */}
-      <CategoryPreview category={selectedCategory} />
+      {/* Right Sidebar */}
+      <div className="hidden md:block md:w-80 shrink-0">
+        <CategoryPreview category={selectedCategory} />
+      </div>
 
-     <CreateCategoryModal
-  open={openCreateModal || !!editingCategory}
-  category={editingCategory}
-  onClose={() => {
-    setOpenCreateModal(false);
-    setEditingCategory(undefined);
-  }}
-  onSuccess={handleCategorySaved}
-/>
-      
+      <CreateCategoryModal
+        open={openCreateModal || !!editingCategory}
+        category={editingCategory}
+        onClose={() => {
+          setOpenCreateModal(false);
+          setEditingCategory(undefined);
+        }}
+        onSuccess={handleCategorySaved}
+      />
     </div>
   );
-
-  
 }
-

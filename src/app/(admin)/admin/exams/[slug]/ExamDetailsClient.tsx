@@ -5,7 +5,7 @@ import type { Exam } from "@/components/admin/exams/types";
 import type { Subject } from "@/components/admin/subjects/types";
 import SubjectsTable from "@/components/admin/subjects/SubjectsTable";
 import CreateSubjectModal from "@/components/admin/subjects/CreateSubjectModal";
-
+import { toast } from "react-hot-toast";
 type Props = {
   exam: Exam;
   initialSubjects: Subject[];
@@ -29,17 +29,36 @@ async function refreshSubjects() {
 async function handleDelete(subject: Subject) {
   if (!confirm("Delete this subject?")) return;
 
-  await fetch("/api/subjects", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+  const toastId = toast.loading("Deleting subject...");
+
+  try {
+    const res = await fetch("/api/subjects", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify({
       id: subject.id,
     }),
   });
 
-  refreshSubjects();
+  if (!res.ok) {
+      toast.error("Failed to delete subject.", {
+        id: toastId,
+      });
+      return;
+    }
+
+    await refreshSubjects();
+
+    toast.success("Subject deleted successfully!", {
+      id: toastId,
+    });
+  } catch {
+    toast.error("Something went wrong.", {
+      id: toastId,
+    });
+  }
 }
 
   return (
