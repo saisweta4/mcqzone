@@ -27,7 +27,6 @@ export function Footer() {
             <li><Link href="/exams" className="hover:text-white">All Exams</Link></li>
             <li><Link href="/exams/opsc" className="hover:text-white">OPSC</Link></li>
             <li><Link href="/exams/ossc" className="hover:text-white">OSSC</Link></li>
-            <li><Link href="/exams/osssc" className="hover:text-white">OSSSC</Link></li>
             <li><Link href="/exams/railway" className="hover:text-white">Railway</Link></li>
             <li><Link href="/exams/banking" className="hover:text-white">Banking</Link></li>
             <li><Link href="/exams" className="hover:text-white">More Exams</Link></li>

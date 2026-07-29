@@ -84,7 +84,7 @@ const { isSignedIn, user } = useUser();
           <History className="h-5 w-5" />
           AI Chatbot
         </Link>
-        <Link href="/study-plan" className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+        <Link href="/study-planner" className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
           <Bell className="h-5 w-5" />
           Study Planner
         </Link>
