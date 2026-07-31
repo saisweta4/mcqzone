@@ -53,15 +53,14 @@ export default function CategoriesTable({
                   }
                 >
                   <td className="px-6 py-4">
-                    <Link
-                      href={`/admin/categories/${category.id}`}
+                    <span
                       className="hover:text-primary transition-colors"
                     >
                       <p className="font-semibold text-gray-900">
                         {category.name}
                       </p>
                       <p className="text-xs text-gray-500">{category.id}</p>
-                    </Link>
+                    </span>
                   </td>
 
                   <td className="px-6 py-4">

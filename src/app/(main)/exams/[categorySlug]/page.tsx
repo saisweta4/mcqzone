@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { 
-  ChevronLeft, Search, Bell, History, Globe, 
-  Scale, TrendingUp, Brain, Calendar, Info, 
-  BookOpen, FileQuestion, Target, Clock, ChevronRight,
+  ChevronLeft,  History, Globe, 
+  Scale, TrendingUp, Brain, Calendar, 
+  BookOpen, 
   Calculator, Monitor
 } from "lucide-react";
 import {
@@ -39,6 +39,7 @@ export default async function ExamsPage({
   const { categorySlug } = await params;
 
    const categories = await getAllCategories();
+  
 
 const category = await getCategoryBySlug(categorySlug);
 const exams = await getExamsByCategorySlug(categorySlug);

@@ -41,7 +41,7 @@ export function Footer() {
 
           <ul className="space-y-2 text-sm text-blue-100">
             <li><Link href="/study-planner" className="hover:text-white">Study Planner</Link></li>
-            <li><Link href="/ai-chatbot" className="hover:text-white">AI Chatbot</Link></li>
+            <li><Link href="/chatbot" className="hover:text-white">AI Chatbot</Link></li>
             <li><Link href="/profile" className="hover:text-white">My Profile</Link></li>
           </ul>
         </div>

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Sidebar } from "@/components/exams/sidebar";
 import { ExamsGrid } from "@/components/exams/exams-grid";
 import { ExamsHero } from "@/components/exams/exams-hero";

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { 
   LayoutGrid, 
-  GraduationCap, 
   History, 
   Bell, 
   Compass, 
@@ -14,10 +13,10 @@ import {
 import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 
-import { type ExamCategory } from "@/types/exam";
+import { type Category } from "@/components/admin/categories/types"; // or wherever this interface is
 
 interface SidebarProps {
-  examCategories: ExamCategory[];
+  examCategories: Category[];
 }
 
 export function Sidebar({ examCategories = [] }: SidebarProps) {
@@ -130,7 +129,7 @@ const { isSignedIn, user } = useUser();
   {(categoryExams[categoryId] || []).map((subexam) => (
     <li key={subexam.id}>
       <Link
-        href={`/exams/${subexam.slug}`}
+       href={`/exams/${exam.slug}/${subexam.slug}`}
         className="flex items-center gap-3 text-sm text-gray-500 hover:text-primary transition-colors"
       >
         <div className="h-1.5 w-1.5 rounded-full border-[1.5px] border-gray-400 shrink-0"></div>
