@@ -22,7 +22,11 @@ const { categorySlug, examSlug, subjectId } = await params;
 const { userId } = await auth();
 
 if (!userId) {
-  redirect("/sign-in");
+  redirect(
+    `/sign-in?redirect_url=${encodeURIComponent(
+      `/${categorySlug}/${examSlug}/${subjectId}`
+    )}`
+  );
 }
 
 const exam = await getExamBySlug(examSlug);

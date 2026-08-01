@@ -8,7 +8,7 @@ export default async function ProfilePage() {
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/sign-in");
+   redirect("/sign-in?redirect_url=/profile");
   }
 
   return (

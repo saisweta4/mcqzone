@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Sidebar } from "@/components/exams/sidebar"; 
-import { type ExamCategory } from "@/types/exam"; 
+import { type Category } from "@/components/admin/categories/types"; // or wherever this interface is
 
 interface MobileSidebarProps {
-  examCategories?: ExamCategory[];
+  examCategories: Category[];
 }
 
 export function MobileSidebar({ examCategories = [] }: MobileSidebarProps) {

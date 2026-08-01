@@ -14,7 +14,7 @@ export default async function AdminLayout({
 
   // Not logged in
   if (!user) {
-    redirect("/sign-in");
+   redirect("/sign-in?redirect_url=/admin");
   }
 
   // Logged in but not an admin
