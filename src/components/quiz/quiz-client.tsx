@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {useRouter} from "next/navigation";
 import { 
-  ChevronLeft, HelpCircle, Bookmark, AlertTriangle, 
+  ChevronLeft, 
   CheckCircle2, BookOpen, Sparkles, ChevronRight, XCircle
 } from "lucide-react";
 import toast from "react-hot-toast";

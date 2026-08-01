@@ -24,7 +24,7 @@ const { userId } = await auth();
 if (!userId) {
   redirect(
     `/sign-in?redirect_url=${encodeURIComponent(
-      `/${categorySlug}/${examSlug}/${subjectId}`
+      `exams/${categorySlug}/${examSlug}/${subjectId}`
     )}`
   );
 }
